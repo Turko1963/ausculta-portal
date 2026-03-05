@@ -1,0 +1,1563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ausculta · Partnership Proposal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:       #0C0B09;
+  --bg2:      #141210;
+  --ink:      #EDE9E0;
+  --ink50:    rgba(237,233,224,.5);
+  --ink25:    rgba(237,233,224,.25);
+  --ink10:    rgba(237,233,224,.08);
+  --gold:     #C8880A;
+  --gold-dim: rgba(200,136,10,.15);
+  --blue:     #2E8FD4;
+  --blue-dim: rgba(46,143,212,.12);
+  --green:    #1AAD6E;
+  --green-dim:rgba(26,173,110,.12);
+  --pink:     #D4206E;
+  --pink-dim: rgba(212,32,110,.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  cursor: none;
+  overflow-x: hidden;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor { position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .3s; }
+#cursor-ring { position:fixed;width:36px;height:36px;border:1px solid rgba(200,136,10,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s ease,width .25s,height .25s,border-color .3s; }
+body:has(a:hover) #cursor, body:has(button:hover) #cursor { width:4px;height:4px; }
+body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width:52px;height:52px; }
+
+/* ── PROGRESS BAR ── */
+#progress { position:fixed;top:0;left:0;height:1px;background:var(--gold);z-index:1000;transition:width .1s; }
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: linear-gradient(to bottom, rgba(12,11,9,.95) 0%, transparent 100%);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  color: var(--ink);
+}
+.nav-logo span { color: var(--gold); }
+.nav-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .3em;
+  color: var(--ink25);
+  text-transform: uppercase;
+}
+
+/* ── LAYOUT ── */
+.page { max-width: 900px; margin: 0 auto; padding: 0 48px 120px; }
+
+/* ── COVER ── */
+#cover {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 96px;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 70% 30%, rgba(200,136,10,.06) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 80%, rgba(26,173,110,.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.cover-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(237,233,224,.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(237,233,224,.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+}
+
+.cover-inner { position:relative; max-width: 900px; margin: 0 auto; padding: 0 48px; }
+
+.cover-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .42em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  opacity: 0;
+  animation: fadeUp .8s ease .3s forwards;
+}
+.cover-eyebrow::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+  opacity: .5;
+}
+
+.cover-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(52px, 8vw, 96px);
+  font-weight: 300;
+  line-height: .92;
+  letter-spacing: -.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+  opacity: 0;
+  animation: fadeUp .9s ease .5s forwards;
+}
+.cover-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cover-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(18px, 2.5vw, 26px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink50);
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: fadeUp .9s ease .7s forwards;
+}
+
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 0;
+  width: fit-content;
+  border: 1px solid var(--ink10);
+  opacity: 0;
+  animation: fadeUp .8s ease .9s forwards;
+}
+.cover-meta-item {
+  padding: 16px 28px;
+  border-right: 1px solid var(--ink10);
+}
+.cover-meta-item:last-child { border-right: none; }
+.cover-meta-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--ink25);
+  margin-bottom: 6px;
+}
+.cover-meta-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  right: 48px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: var(--ink25);
+  writing-mode: vertical-rl;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.4s forwards;
+}
+.scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--ink25), transparent);
+}
+
+/* ── SECTIONS ── */
+section {
+  padding: 120px 0 0;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(.23,1,.32,1);
+}
+section.vis { opacity: 1; transform: none; }
+
+.sec-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 56px;
+}
+.sec-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .3em;
+  color: var(--ink25);
+  padding-top: 14px;
+  flex-shrink: 0;
+  width: 48px;
+}
+.sec-title-wrap { flex: 1; }
+.sec-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+  display: block;
+}
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4.5vw, 52px);
+  font-weight: 400;
+  line-height: .95;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+.sec-title em { font-style: italic; color: var(--ink50); }
+.sec-rule {
+  height: 1px;
+  background: linear-gradient(to right, var(--accent, var(--gold)), transparent);
+  margin: 0 0 48px 80px;
+  opacity: .4;
+}
+
+/* ── BODY TEXT ── */
+.body-text {
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--ink50);
+  margin-left: 80px;
+  margin-bottom: 24px;
+  max-width: 680px;
+}
+.body-text strong { color: var(--ink); font-weight: 500; }
+
+/* ── SIDEBAR BOX ── */
+.sidebar-box {
+  margin: 40px 0 40px 80px;
+  padding: 24px 28px;
+  border-left: 3px solid var(--accent, var(--gold));
+  background: var(--accent-dim, var(--gold-dim));
+  max-width: 680px;
+}
+.sidebar-box p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1.6;
+  margin-bottom: 4px;
+}
+.sidebar-box p:last-child { margin-bottom: 0; }
+
+/* ── H2 ── */
+.h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 48px 0 16px 80px;
+  letter-spacing: -.01em;
+}
+
+/* ── BULLETS ── */
+.blt-list {
+  margin: 0 0 0 80px;
+  list-style: none;
+  max-width: 680px;
+}
+.blt-list li {
+  font-size: 15px;
+  color: var(--ink50);
+  padding: 8px 0 8px 24px;
+  position: relative;
+  border-bottom: 1px solid var(--ink10);
+  line-height: 1.65;
+}
+.blt-list li:last-child { border-bottom: none; }
+.blt-list li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--accent, var(--gold));
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
+
+/* ── TAG LINES ── */
+.tag-line {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0 0 4px 80px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ink10);
+  max-width: 680px;
+}
+.tag-line:last-of-type { border-bottom: none; }
+.tag-key {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent, var(--gold));
+  flex-shrink: 0;
+  width: 140px;
+  padding-top: 2px;
+}
+.tag-val {
+  font-size: 15px;
+  color: var(--ink50);
+  line-height: 1.6;
+}
+.tag-val strong { color: var(--ink); font-weight: 500; }
+
+/* ── PHASE BLOCKS ── */
+.phase-block {
+  margin: 0 0 48px 0;
+  border: 1px solid var(--ink10);
+  overflow: hidden;
+}
+.phase-hdr {
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--phase-color);
+}
+.phase-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .3em;
+  color: rgba(255,255,255,.6);
+}
+.phase-weeks {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: .15em;
+  color: rgba(255,255,255,.7);
+}
+.phase-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-style: italic;
+  color: rgba(255,255,255,.95);
+  font-weight: 300;
+}
+.phase-sep { flex: 1; height: 1px; background: rgba(255,255,255,.15); }
+.phase-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.phase-col {
+  padding: 20px 22px;
+  border-right: 1px solid var(--ink10);
+}
+.phase-col:last-child { border-right: none; }
+.phase-col-hdr {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--ink25);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ink10);
+}
+.phase-item {
+  font-size: 13.5px;
+  color: var(--ink50);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--ink10);
+  line-height: 1.5;
+}
+.phase-item:last-child { border-bottom: none; }
+
+/* ── MILESTONE TABLE ── */
+.mile-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.mile-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--ink25);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--ink10);
+  background: var(--bg2);
+}
+.mile-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--ink10);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.mile-table tr:last-child td { border-bottom: none; }
+.mile-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+.td-week { font-family:'DM Mono',monospace; font-size:11px; color:var(--ink25); white-space:nowrap; }
+.td-focus { font-weight:500; color:var(--ink); font-size:13px; }
+.td-desc { color:var(--ink50); }
+.td-gate { font-family:'DM Mono',monospace; font-size:10px; color:var(--ink25); white-space:nowrap; }
+.td-gate.star { color:var(--gold); font-weight:500; }
+.month-divider td {
+  padding: 6px 16px;
+  background: var(--bg2);
+  border-top: 1px solid var(--ink10);
+}
+.month-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── COMP TABLE ── */
+.comp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-left: 0;
+  font-size: 14px;
+}
+.comp-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  padding: 14px 20px;
+  text-align: left;
+  background: #1A1814;
+  border-bottom: 1px solid var(--ink10);
+}
+.comp-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--ink10);
+  vertical-align: middle;
+}
+.comp-table tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-td-label { font-weight:500; color:var(--ink); }
+.comp-td-val { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:500; }
+.comp-td-note { font-size:12px; color:var(--ink25); }
+
+/* ── FREELANCER TABLE ── */
+.free-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.free-table th {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .35em;
+  text-transform: uppercase;
+  color: var(--ink25);
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--ink10);
+  background: var(--bg2);
+}
+.free-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--ink10);
+  color: var(--ink50);
+  line-height: 1.55;
+}
+.free-table tr:last-child td { border-bottom: none; }
+.free-table tr:nth-child(even) td { background: rgba(255,255,255,.015); }
+.free-td-role { color: var(--ink); font-weight: 500; }
+.free-td-src { font-family:'DM Mono',monospace; font-size:11px; color:var(--ink25); }
+
+/* ── TERMS TABLE ── */
+.terms-table { width:100%; border-collapse:collapse; font-size:14px; }
+.terms-table td {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--ink10);
+  vertical-align: top;
+}
+.terms-table tr:last-child td { border-bottom: none; }
+.terms-key { font-weight:500; color:var(--ink); width:220px; padding-right:32px; }
+.terms-val { color:var(--ink50); }
+
+/* ── LONG GAME SECTION ── */
+.big-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(72px, 10vw, 120px);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink10);
+  margin-left: 80px;
+  letter-spacing: -.04em;
+  user-select: none;
+  position: relative;
+}
+.big-number span {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  font-size: 14px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: .2em;
+  color: var(--pink);
+  font-weight: 400;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--ink10);
+  margin-left: 80px;
+  max-width: 680px;
+  margin-bottom: 48px;
+}
+.card {
+  background: var(--bg);
+  padding: 28px 28px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-color, var(--gold));
+  opacity: .6;
+}
+.card-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .32em;
+  color: var(--ink25);
+  margin-bottom: 12px;
+}
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.card-body {
+  font-size: 13px;
+  color: var(--ink50);
+  line-height: 1.6;
+}
+
+/* ── CLOSING ── */
+.closing {
+  margin-top: 140px;
+  padding: 80px 0 120px 80px;
+  border-top: 1px solid var(--ink10);
+}
+.closing-statement {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--ink);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+.closing-statement em { font-style: italic; color: var(--gold); }
+.closing-sig {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--ink25);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:none; }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+/* ── DIVIDER ── */
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--ink10) 30%, var(--ink10) 70%, transparent);
+  margin: 0;
+}
+
+/* ── ACCENT COLORS PER SECTION ── */
+[data-accent="gold"]  { --accent: var(--gold);  --accent-dim: var(--gold-dim);  }
+[data-accent="blue"]  { --accent: var(--blue);  --accent-dim: var(--blue-dim);  }
+[data-accent="green"] { --accent: var(--green); --accent-dim: var(--green-dim); }
+[data-accent="pink"]  { --accent: var(--pink);  --accent-dim: var(--pink-dim);  }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 680px) {
+  .page { padding: 0 24px 80px; }
+  nav { padding: 18px 24px; }
+  .cover-inner { padding: 0 24px; }
+  .cover-meta { grid-template-columns: 1fr; }
+  .cover-meta-item { border-right: none; border-bottom: 1px solid var(--ink10); }
+  .sec-header { gap: 16px; }
+  .sec-num, .h2, .blt-list, .tag-line, .sidebar-box, .body-text, .terms-table { margin-left: 0; }
+  .phase-cols { grid-template-columns: 1fr; }
+  .cards-grid { grid-template-columns: 1fr; margin-left: 0; }
+  .closing { padding-left: 0; }
+}
+
+/* ── EDITABLE ROADMAP ── */
+.mile-table td[contenteditable] {
+  outline: none;
+  cursor: text;
+  border-radius: 2px;
+  transition: background .15s;
+  position: relative;
+}
+.mile-table td[contenteditable]:hover {
+  background: var(--edit-hover) !important;
+}
+.mile-table td[contenteditable]:focus {
+  background: var(--edit-focus) !important;
+  box-shadow: inset 0 0 0 1.5px var(--accent, var(--gold));
+}
+.roadmap-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.roadmap-btn {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border: 1px solid var(--ink10);
+  background: transparent;
+  color: var(--ink50);
+  cursor: pointer;
+  transition: all .18s;
+  border-radius: 2px;
+}
+.roadmap-btn:hover { border-color: var(--accent, var(--gold)); color: var(--accent, var(--gold)); }
+.roadmap-btn.danger:hover { border-color: #e05;  color: #e05; }
+.roadmap-btn.add-row-btn { color: var(--green); border-color: var(--green); opacity: .7; }
+.roadmap-btn.add-row-btn:hover { opacity: 1; }
+.td-del {
+  width: 28px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--ink25);
+  font-size: 14px;
+  transition: color .15s;
+}
+.td-del:hover { color: #e05; }
+.edit-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid var(--accent, var(--gold));
+  color: var(--accent, var(--gold));
+  opacity: .6;
+  border-radius: 2px;
+}
+.save-toast {
+  position: fixed;
+  bottom: 32px;
+  right: 40px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .25s, transform .25s;
+  z-index: 999;
+}
+.save-toast.show { opacity: 1; transform: none; }
+
+:root {
+  --edit-hover: rgba(200,136,10,.06);
+  --edit-focus: rgba(200,136,10,.1);
+}
+</style>
+</head>
+
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Ausc<span>ulta</span></div>
+  <div class="nav-tag">Partnership Proposal · March 2026</div>
+</nav>
+
+<!-- COVER -->
+<div id="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-lines"></div>
+  <div class="cover-inner">
+    <div class="cover-eyebrow">BD & Technology Partnership</div>
+    <h1 class="cover-title">Building<br><em>Something</em><br>Real</h1>
+    <p class="cover-sub">Prove it in 6 months.<br>Then — no end date. Just shared ambition.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Prepared by</div>
+        <div class="cover-meta-val">Ran Zehavi</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Prepared for</div>
+        <div class="cover-meta-val">Ausculta</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cover-meta-label">Date</div>
+        <div class="cover-meta-val">March 2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">scroll</div>
+</div>
+
+<div class="page">
+
+<!-- ── 01 EXECUTIVE SUMMARY ── -->
+<section data-accent="gold">
+  <div class="sec-header">
+    <div class="sec-num">01</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">Overview</span>
+      <h2 class="sec-title">Executive<br><em>Summary</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">This is an open-ended partnership that begins with 6 focused months — and continues for as long as both sides are building something worth continuing. building Ausculta's commercial and technical foundations — not chasing leads, but making sure the product is ready, the story is sharp, the demo is irresistible, and the right structure is in place to grow fast.</p>
+  <p class="body-text">The first 6 months are structured and focused — build the machine, sign the first clients. After that, the collaboration continues with no fixed end date: growing, raising, and scaling together for as long as it makes sense for both sides.</p>
+
+  <div class="sidebar-box">
+    <p>Months 1–3: Foundation — product clarity, demo mastery, Stage 1 complete, skinny SKU live, freelancer bench built.</p>
+    <p>Months 4–6: Conversion — first pilots running, 3 paying clients signed, GTM playbook final.</p>
+    <p>After Month 6: No expiry date — just continued partnership, growing revenue, and shared ownership.</p>
+  </div>
+</section>
+
+<!-- ── 02 THE AGREEMENT ── -->
+<section data-accent="blue">
+  <div class="sec-header">
+    <div class="sec-num">02</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">What This Is</span>
+      <h2 class="sec-title">The<br><em>Agreement</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">This is not a rigid contract — it is a working partnership built on trust and shared ambition. We review together at every milestone and adapt as needed. There is no fixed end date — this runs for as long as both sides want to keep building.</p>
+
+  <div class="h2">What is in scope</div>
+  <ul class="blt-list">
+    <li>Product definition — know exactly what Ausculta sells, by world, by tier, at every price point</li>
+    <li>Demo mastery — a demo so good that prospects ask "when can we start?" before it ends</li>
+    <li>Tech collaboration — active support to the engineering team to complete Stage 1 on time</li>
+    <li>Vovalytics integration — all capabilities fully mapped and branded under Ausculta</li>
+    <li>Skinny SKU — lightweight, fast-to-deploy version for clients who want to try first</li>
+    <li>Freelancer network — a bench of 4–6 vetted specialists ready to plug in at scale</li>
+    <li>Global foundation — GTM playbook and international brief delivered by end of Month 6</li>
+  </ul>
+
+  <div class="h2" style="margin-top:36px;">Explicitly NOT in scope (Months 1–3)</div>
+  <ul class="blt-list">
+    <li>Cold lead generation — outbound pipelines come after the product story is locked</li>
+    <li>CRM setup — introduced later in 2026 when deal volume warrants the infrastructure</li>
+    <li>Mass marketing spend — no budget waste before positioning is validated</li>
+  </ul>
+
+  <div class="sidebar-box">
+    <p>The goal of Months 1–3 is certainty: certain what Ausculta is, certain it works,</p>
+    <p>certain that a client who sees the demo wants to buy it.</p>
+  </div>
+</section>
+
+<!-- ── 03 PRODUCT CLARITY ── -->
+<section data-accent="green">
+  <div class="sec-header">
+    <div class="sec-num">03</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">Knowing What We Sell</span>
+      <h2 class="sec-title">Product<br><em>Clarity</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <div class="h2">Vovalytics → Ausculta</div>
+  <p class="body-text">Ausculta is built on Vovalytics. The first task is to map every capability to the four Ausculta worlds and ensure the full technology is surfaced under the Ausculta brand with no orphaned features.</p>
+  <ul class="blt-list">
+    <li>Feature audit: every Vovalytics capability documented, categorised, and assigned to a world</li>
+    <li>Branding gap analysis: identify any UI, API, or documentation still referencing Vovalytics</li>
+    <li>Priority matrix: Stage 1 must-haves vs. Phase 2 nice-to-haves</li>
+    <li>Client-facing feature list: plain English, benefit-led, by world — no technical jargon</li>
+  </ul>
+
+  <div class="h2">The Skinny SKU — Ausculta Lite</div>
+  <p class="body-text">A lightweight, fast-to-run version for clients who want to try before committing. Not a stripped-down product — a focused experience that demonstrates the most compelling value in the least time.</p>
+  <ul class="blt-list">
+    <li>Scope: 1 world, 1 use case, 5 calls analysed — full AI output, zero integration required</li>
+    <li>Deployment: upload calls, receive report within 24 hours, no setup on the client side</li>
+    <li>Link to Try feature: feeds directly into the "Try 5 Calls Free" experience on the platform</li>
+  </ul>
+</section>
+
+<!-- ── 04 THE DEMO ── -->
+<section data-accent="gold">
+  <div class="sec-header">
+    <div class="sec-num">04</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">The Most Important Asset</span>
+      <h2 class="sec-title">The<br><em>Demo</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">A great demo does not show features — it shows transformation. The prospect should leave feeling they have already seen their future with Ausculta, and that going back would be a step backwards.</p>
+
+  <div class="h2">Demo Architecture</div>
+  <ul class="blt-list">
+    <li>Master demo: 20-minute journey through all four worlds with a coherent narrative</li>
+    <li>World-specific demos: 8-minute focused version per world for targeted conversations</li>
+    <li>Executive demo: 10-minute C-suite version focused on ROI, risk, and competitive positioning</li>
+    <li>Skinny demo: 5-minute "taste" that ends with the offer to try 5 real calls immediately</li>
+  </ul>
+
+  <div class="h2">Demo Principles</div>
+  <div class="tag-line" data-accent="gold">
+    <div class="tag-key">Show revenue</div>
+    <div class="tag-val">Every feature connects to a number — win rate, resolution time, compliance cost, ROI.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Real language</div>
+    <div class="tag-val">Prospects hear their own words back: "objection handling", "audit trail", "CSAT forecast".</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Make it personal</div>
+    <div class="tag-val">Where possible, use the prospect's own industry data or a relevant case simulation.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">End with urgency</div>
+    <div class="tag-val">Close every demo with the skinny SKU offer — "let's run your last 5 calls right now."</div>
+  </div>
+</section>
+
+<!-- ── 05 TECH COLLABORATION ── -->
+<section data-accent="blue">
+  <div class="sec-header">
+    <div class="sec-num">05</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">Stage 1 Completion</span>
+      <h2 class="sec-title">Tech<br><em>Collaboration</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">Active collaboration with the engineering team to ensure Stage 1 is complete, client-facing, and demo-ready. This means being in the room, understanding blockers, and helping prioritise what matters most for early clients.</p>
+
+  <div class="tag-line">
+    <div class="tag-key">Stage 1 delivery</div>
+    <div class="tag-val">Weekly check-ins with tech team · track progress on critical features · surface commercial blockers early.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Demo env</div>
+    <div class="tag-val">Build a stable, impressive demo environment — no broken flows, no placeholder data.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Migration</div>
+    <div class="tag-val">All Vovalytics features fully functional under Ausculta brand by end of Month 1.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Skinny SKU</div>
+    <div class="tag-val">Define technical requirements for the lightweight trial version · scope with engineering.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">QA & readiness</div>
+    <div class="tag-val">Before any external demo, validate the product end-to-end from a client's perspective.</div>
+  </div>
+</section>
+
+<!-- ── 06 ROADMAP ── -->
+<section data-accent="green">
+  <div class="sec-header">
+    <div class="sec-num">06</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">First 24 Weeks — Then Open-Ended</span>
+      <h2 class="sec-title">Weekly<br><em>Roadmap</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">The first 24 weeks are structured week by week. Months 1–3 build the foundation; Months 4–6 generate the first paying clients. After Week 24 — the partnership continues open-ended. Gates marked ★ are binary checkpoints.</p>
+
+  <div class="roadmap-toolbar">
+    <span class="edit-badge">✎ editable</span>
+    <button class="roadmap-btn add-row-btn" onclick="addRow('phase1')">+ Add row (Foundation)</button>
+    <button class="roadmap-btn add-row-btn" onclick="addRow('phase2')">+ Add row (Traction)</button>
+    <button class="roadmap-btn danger" onclick="resetRoadmap()">Reset to default</button>
+  </div>
+
+  <div id="save-toast" class="save-toast">Saved</div>
+
+  <table class="mile-table" id="roadmap-table" style="margin-top:8px;">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Focus</th>
+        <th>Activity</th>
+        <th>Output / Gate</th>
+        <th style="width:28px"></th>
+      </tr>
+    </thead>
+    <tbody id="roadmap-body">
+    </tbody>
+  </table>
+
+  <script>
+  (function(){
+    const DEFAULT = {
+      phase1: [
+        ['Wk 1','Onboarding','Deep product immersion · map Vovalytics features to Ausculta worlds · team alignment','Discovery done',''],
+        ['Wk 2','Product Clarity','Define exactly what Ausculta sells · feature list by world · pricing tiers drafted','Product brief v1',''],
+        ['Wk 3','Demo Build','Build demo script per world · identify top 3 use cases · first internal run-through','Demo script ready',''],
+        ['Wk 4','Ausculta Lite','Scope lightweight trial version · define min-viable client-ready build with tech team','★ Gate 1','star'],
+        ['Wk 5','Tech Sprint','Active Stage 1 collaboration · QA key client flows · Vovalytics branding migration','Stage 1 progress',''],
+        ['Wk 6','Demo Rehearsal','Internal demo reviews · sharpen narrative · stress-test objection handling','Demo v2 locked',''],
+        ['Wk 7','Ausculta Lite Live','Lightweight version ready for first interested client · onboarding flow defined','★ Gate 2','star'],
+        ['Wk 8','Freelancers','Identify + brief 4–6 specialist freelancers (design, dev, content, legal)','Freelancer bench',''],
+        ['Wk 9','First Demos','First external demos with warm contacts · structured feedback log started','Feedback log v1',''],
+        ['Wk 10','Iterate','Refine demo + product based on feedback · pricing confirmed · second demo wave','Pitch v3 final',''],
+        ['Wk 11','Pilot Prep','Pilot agreement template ready · success metrics defined · first pilot candidate identified','Pilot framework',''],
+        ['Wk 12','M1–3 Review','Retrospective · GTM playbook draft · international brief · M4–6 plan locked','★ Gate 3','star'],
+      ],
+      phase2: [
+        ['Wk 13','Pilot Launch','First pilot running · weekly check-in cadence · success metrics being tracked','Pilot #1 active',''],
+        ['Wk 14','Demo Outreach','Targeted demos with pre-warmed prospects · Ausculta Lite offered post-demo','2nd prospect demo',''],
+        ['Wk 15','Partner Talks','First conversations with potential SI / reseller partners for scale','Partner identified',''],
+        ['Wk 16','Pilot Convert','Pilot #1 → paid contract negotiation · pricing and terms confirmed','★ Gate 4 — Client #1','star'],
+        ['Wk 17','Client #2 Push','Second demo wave · Ausculta Lite trial for Client #2 candidate · feedback loop','Trial #2 active',''],
+        ['Wk 18','Product Polish','Implement top feedback from Pilot #1 · update demo with live client proof','v2 product update',''],
+        ['Wk 19','Client #2 Close','Pilot #2 → paid contract · onboarding Client #2 · document success metrics','★ Gate 5 — Client #2','star'],
+        ['Wk 20','Scale Prep','Freelancer network fully active · international brief refined · CRM scope defined','CRM brief ready',''],
+        ['Wk 21','Client #3 Push','Third client pipeline active · partner channel first referral expected','Pipeline seeded',''],
+        ['Wk 22','Global Brief','International expansion brief final · priority markets · entry strategy per market','Intl brief final',''],
+        ['Wk 23','Client #3 Close','Third paying client signed · onboarding started · team expansion scoped','★ Gate 6 — Client #3','star'],
+        ['Wk 24','M6 Review','Full retrospective · 3 clients live · open-ended partnership officially begins','★ Leadership gate','star'],
+      ]
+    };
+
+    // In-memory state (no localStorage — not supported here)
+    let state = JSON.parse(JSON.stringify(DEFAULT));
+
+    function makeCell(text, cls, editable=true, gate='') {
+      const td = document.createElement('td');
+      td.className = cls + (gate==='star'?' star':'');
+      td.textContent = text;
+      if(editable) {
+        td.contentEditable = 'true';
+        td.spellcheck = false;
+        td.addEventListener('blur', saveState);
+        td.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); td.blur(); } });
+      }
+      return td;
+    }
+
+    function makeDelBtn(phase, idx) {
+      const td = document.createElement('td');
+      td.className = 'td-del';
+      td.innerHTML = '×';
+      td.title = 'Delete row';
+      td.addEventListener('click', () => {
+        state[phase].splice(idx, 1);
+        render();
+        showToast();
+      });
+      return td;
+    }
+
+    function makeDivider(label) {
+      const tr = document.createElement('tr');
+      tr.className = 'month-divider';
+      const td = document.createElement('td');
+      td.colSpan = 5;
+      td.innerHTML = '<span class="month-label">'+label+'</span>';
+      tr.appendChild(td);
+      return tr;
+    }
+
+    function render() {
+      const tbody = document.getElementById('roadmap-body');
+      tbody.innerHTML = '';
+      ['phase1','phase2'].forEach((phase,pi) => {
+        tbody.appendChild(makeDivider(pi===0?'Months 1–3 · Foundation':'Months 4–6 · Traction & First Clients'));
+        state[phase].forEach((row,idx) => {
+          const tr = document.createElement('tr');
+          tr.appendChild(makeCell(row[0],'td-week',true));
+          tr.appendChild(makeCell(row[1],'td-focus',true));
+          tr.appendChild(makeCell(row[2],'td-desc',true));
+          tr.appendChild(makeCell(row[3],'td-gate',true,row[4]));
+          tr.appendChild(makeDelBtn(phase,idx));
+          // Sync edits back to state on blur
+          const cells = tr.querySelectorAll('[contenteditable]');
+          [0,1,2,3].forEach(ci => {
+            cells[ci].addEventListener('blur', () => {
+              state[phase][idx][ci] = cells[ci].textContent;
+              if(ci===3) state[phase][idx][4] = cells[ci].classList.contains('star')?'star':'';
+            });
+          });
+          tbody.appendChild(tr);
+        });
+      });
+    }
+
+    function saveState() { showToast(); }
+
+    function showToast() {
+      const t = document.getElementById('save-toast');
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),1800);
+    }
+
+    window.addRow = function(phase) {
+      const lastWk = state[phase].length ? state[phase][state[phase].length-1][0] : 'Wk ?';
+      const num = parseInt(lastWk.replace('Wk ',''))||0;
+      state[phase].push(['Wk '+(num+1),'New Task','Describe the activity here','Output','']);
+      render();
+      // Focus the new focus cell
+      setTimeout(()=>{
+        const rows = document.querySelectorAll('#roadmap-body tr:not(.month-divider)');
+        const last = rows[rows.length-1];
+        if(last) last.querySelectorAll('[contenteditable]')[1].focus();
+      },50);
+    };
+
+    window.resetRoadmap = function() {
+      if(confirm('Reset roadmap to default?')) {
+        state = JSON.parse(JSON.stringify(DEFAULT));
+        render();
+        showToast();
+      }
+    };
+
+    render();
+  })();
+  </script>
+</section>
+
+<!-- ── 07 FREELANCER NETWORK ── -->
+<section data-accent="blue">
+  <div class="sec-header">
+    <div class="sec-num">07</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">The Lean Operating Model</span>
+      <h2 class="sec-title">Freelancer<br><em>Network</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">Ausculta does not need headcount to scale — it needs a reliable bench of expert freelancers activated on demand. By Month 3, identified and vetted. By Month 6 and beyond, fully operational and growing.</p>
+
+  <table class="free-table" style="margin-top:32px;">
+    <thead>
+      <tr><th>Role</th><th>Scope</th><th>Source / Timing</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="free-td-role">UI/UX Designer</td><td>Dashboard polish · demo environment · skinny SKU visuals</td><td class="free-td-src">Upwork / Toptal — project basis</td></tr>
+      <tr><td class="free-td-role">Frontend Developer</td><td>Ausculta skin over Vovalytics · trial onboarding flow</td><td class="free-td-src">GitHub portfolio + vetting</td></tr>
+      <tr><td class="free-td-role">Content / Copywriter</td><td>Website copy · one-pagers · demo leave-behind materials</td><td class="free-td-src">Remote — per deliverable</td></tr>
+      <tr><td class="free-td-role">AI / ML Engineer</td><td>Feature customisation · model tuning per vertical</td><td class="free-td-src">Senior freelance or part-time</td></tr>
+      <tr><td class="free-td-role">Legal / Compliance</td><td>Pilot agreement templates · GDPR / SOC2 guidance</td><td class="free-td-src">Specialist legal freelancer</td></tr>
+      <tr><td class="free-td-role">Demand Gen / SEO</td><td>Long-term content pipeline for international markets · AI engine search optimization (ChatGPT, Perplexity, Gemini)</td><td class="free-td-src">Retained micro-agency (Month 4+)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ── 08 GLOBAL AMBITION ── -->
+<section data-accent="green">
+  <div class="sec-header">
+    <div class="sec-num">08</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">The Bigger Picture</span>
+      <h2 class="sec-title">Global<br><em>Ambition</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">Ausculta is being built to be a global company. By Month 6, the collaboration has a complete, validated commercial foundation and 3 paying clients. From that point, the partnership continues indefinitely — no expiry, just growth. The international path is not just scoped — it is funded by real revenue and backed by a long-term partner.</p>
+
+  <div class="tag-line">
+    <div class="tag-key">GTM Playbook</div>
+    <div class="tag-val">A documented, repeatable commercial process any BD hire in any market can follow.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Priority markets</div>
+    <div class="tag-val"><strong>UK</strong> (compliance demand), <strong>DACH</strong> (highest EU compliance spend), <strong>US</strong> (largest TAM), <strong>SEA</strong> (low competition).</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">CRM readiness</div>
+    <div class="tag-val">CRM infrastructure scoped — activated later in 2026 when deal volume warrants the overhead.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Brand consistency</div>
+    <div class="tag-val">Ausculta looks, sounds, and feels the same whether a client is in Tel Aviv, London, or Singapore.</div>
+  </div>
+</section>
+
+<!-- ── 09 COMPENSATION ── -->
+<section data-accent="gold">
+  <div class="sec-header">
+    <div class="sec-num">09</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">Simple &amp; Aligned</span>
+      <h2 class="sec-title">Compensation<br><em>Structure</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">The model is simple: a monthly retainer for full commitment, and 10% of every client payment received — no tiers, no caps. When Ausculta gets paid, the commission is paid. The retainer continues for as long as the partnership does. The leadership role is earned when 3 paying clients are signed.</p>
+
+  <table class="comp-table" style="margin-top:32px;">
+    <thead>
+      <tr><th>Component</th><th>Monthly</th><th>Per Deal</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="comp-td-label">Monthly Retainer</td>
+        <td class="comp-td-val" style="color:var(--gold)">₪25,000</td>
+        <td class="comp-td-note">—</td>
+        <td class="comp-td-note">Month 1 onwards — no end date</td>
+      </tr>
+      <tr>
+        <td class="comp-td-label">Sales Commission</td>
+        <td class="comp-td-note">—</td>
+        <td class="comp-td-val" style="color:var(--green)">10%</td>
+        <td class="comp-td-note">Of each client payment received</td>
+      </tr>
+      <tr>
+        <td class="comp-td-label">After 3 clients: Lead Role + Equity</td>
+        <td class="comp-td-note">TBD</td>
+        <td class="comp-td-note">TBD</td>
+        <td class="comp-td-note">When 3 paying clients are signed</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tag-line" style="margin-top:36px;">
+    <div class="tag-key">Retainer</div>
+    <div class="tag-val">₪25,000/month for full engagement — minimum 4 dedicated days per week on Ausculta.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">10% Commission</div>
+    <div class="tag-val">10% of every client payment received — simple, transparent, no tiers, no caps.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Timing</div>
+    <div class="tag-val">Commission paid within 14 days of each client payment clearing Ausculta's account.</div>
+  </div>
+  <div class="tag-line">
+    <div class="tag-key">Equity / RSU</div>
+    <div class="tag-val">Negotiated when 3 paying clients are signed — structure defined at that point, partnership continues.</div>
+  </div>
+
+  <div class="sidebar-box" style="margin-top:40px;">
+    <p>Commission on every client payment, retainer every month, for as long as we build together.</p>
+  </div>
+</section>
+
+<!-- ── 10 THE LONG GAME ── -->
+<section data-accent="pink">
+  <div class="sec-header">
+    <div class="sec-num">10</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">Where This Can Go</span>
+      <h2 class="sec-title">The Long<br><em>Game</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">This section is not part of any agreement. It is a shared vision — written honestly, between two people who both want to build something meaningful and be properly rewarded for it.</p>
+  <p class="body-text">The trigger is simple: <strong>3 paying clients</strong>. At that point, the conversation shifts — from partner to co-owner of something serious. And from that point, there is no end date. Just shared ambition, growing revenue, and a long-term partnership with real financial upside for both sides.</p>
+
+  <div class="big-number">3<span>clients → everything changes</span></div>
+
+  <div class="h2">Playing the Big Boys Game</div>
+  <p class="body-text">Three paying clients is not a finish line. It is the moment Ausculta becomes investable. At that point, everything changes — the ambition, the speed, and the options available.</p>
+
+  <div class="cards-grid" style="margin-top:28px;">
+    <div class="card" style="--card-color:var(--gold)">
+      <div class="card-num">01</div>
+      <div class="card-title">Raise Capital</div>
+      <div class="card-body">With 3 live clients and a proven product, Ausculta is ready for a seed or Series A round from VCs, angels, or strategic partners.</div>
+    </div>
+    <div class="card" style="--card-color:var(--blue)">
+      <div class="card-num">02</div>
+      <div class="card-title">Venture Partnerships</div>
+      <div class="card-body">Open conversations with outsourcing ventures, tech accelerators, and strategic investors who add more than just money.</div>
+    </div>
+    <div class="card" style="--card-color:var(--green)">
+      <div class="card-num">03</div>
+      <div class="card-title">Real Valuation</div>
+      <div class="card-body">Revenue + IP + international pipeline = a company worth something. We build toward a number that matters at exit or the next round.</div>
+    </div>
+    <div class="card" style="--card-color:var(--pink)">
+      <div class="card-num">04</div>
+      <div class="card-title">Speed of Scale</div>
+      <div class="card-body">External capital means hiring fast, entering new markets fast, and not being limited by what two people can do alone.</div>
+    </div>
+  </div>
+
+  <div class="sidebar-box" style="--accent:var(--gold);--accent-dim:var(--gold-dim)">
+    <p>Most startups wait too long to raise. Three paying clients in an AI platform</p>
+    <p>with global demand is a compelling story. We tell it loudly, to the right people,</p>
+    <p>at exactly the right moment.</p>
+  </div>
+
+  <div class="h2">Real Skin in the Game</div>
+  <p class="body-text">The goal from day one is not a job. It is a stake. A real, meaningful ownership position in something that has been built together — so that when Ausculta wins, both sides win proportionally.</p>
+  <ul class="blt-list">
+    <li>Equity or profit-share negotiated at the 3-client gate — structure agreed together</li>
+    <li>Monthly income tied directly to client revenue — no ceiling, grows with the company</li>
+    <li>VoIP services integrated as a complementary revenue stream — shared upside on every contract</li>
+    <li>All major decisions made together — this is a partnership, not a vendor relationship</li>
+  </ul>
+
+  <div class="h2">Financial Freedom — The Honest Goal</div>
+  <p class="body-text">Let's say what this is really about. The goal of this partnership — beyond the product, beyond the clients, beyond the global ambition — is <strong>financial freedom</strong>. For both sides.</p>
+  <p class="body-text">Not a salary. Not a retainer. A position in a growing company that generates real revenue, attracts real investment, and creates real long-term value. The kind of outcome that changes what is possible in life — not just what is comfortable this month.</p>
+  <ul class="blt-list">
+    <li>A growing revenue share that replaces — and eventually exceeds — any fixed income</li>
+    <li>An equity position with real value at exit or the next funding round</li>
+    <li>The freedom to work on other projects and ventures because the foundation is solid</li>
+    <li>A partnership built on trust, results, and shared ambition — not on hours logged</li>
+  </ul>
+
+  <div class="sidebar-box">
+    <p>The first 6 months are the proof. Three clients is the signal.</p>
+    <p>After that — raise, scale, own it properly, and build something</p>
+    <p>that pays for the life we want. That is the real proposal.</p>
+  </div>
+</section>
+
+<!-- ── 11 TERMS ── -->
+<section data-accent="gold">
+  <div class="sec-header">
+    <div class="sec-num">11</div>
+    <div class="sec-title-wrap">
+      <span class="sec-label">Clean &amp; Fair</span>
+      <h2 class="sec-title">Proposed<br><em>Terms</em></h2>
+    </div>
+  </div>
+  <div class="sec-rule"></div>
+
+  <p class="body-text">Straightforward commercial terms — designed to be fair, fast to execute, and easy to agree on.</p>
+
+  <table class="terms-table" style="margin: 32px 0 0 80px; max-width: 680px;">
+    <tbody>
+      <tr><td class="terms-key">Engagement Type</td><td class="terms-val">BD & Technology Partner — independent contractor</td></tr>
+      <tr><td class="terms-key">Duration</td><td class="terms-val">Open-ended · starts with 6 structured months · continues with no fixed end date</td></tr>
+      <tr><td class="terms-key">Start Date</td><td class="terms-val">Within 2 weeks of signing — ready to begin immediately</td></tr>
+      <tr><td class="terms-key">Monthly Retainer</td><td class="terms-val">₪25,000 / month · invoiced at start of each month</td></tr>
+      <tr><td class="terms-key">Commission Rate</td><td class="terms-val">10% of each client payment received · no tiers · no caps</td></tr>
+      <tr><td class="terms-key">Commission Timing</td><td class="terms-val">Paid within 14 days of each client payment clearing</td></tr>
+      <tr><td class="terms-key">Expenses</td><td class="terms-val">Pre-approved expenses (travel, tools, freelancers) reimbursed</td></tr>
+      <tr><td class="terms-key">IP &amp; NDA</td><td class="terms-val">Mutual NDA · all work product remains with Ausculta</td></tr>
+      <tr><td class="terms-key">Exit Clause</td><td class="terms-val">14 days written notice after Month 2 · by either party</td></tr>
+      <tr><td class="terms-key">CRM Setup</td><td class="terms-val">To be introduced later in 2026 when pipeline volume warrants</td></tr>
+      <tr><td class="terms-key">What Happens Next</td><td class="terms-val">Partnership deepens at 3 paying clients — collaboration continues indefinitely from there</td></tr>
+    </tbody>
+  </table>
+
+  <div class="success-scene" id="successScene" style="margin-top:48px;">
+    <canvas id="successCanvas"></canvas>
+    <div class="success-text">
+      <div class="success-label">the destination</div>
+      <div class="success-headline">Success</div>
+      <div class="success-sub">Three clients. Real revenue. Open-ended partnership.<br>Financial freedom — for both sides.</div>
+    </div>
+  </div>
+
+  <style>
+  .success-scene {
+    position: relative;
+    height: 220px;
+    border: 1px solid var(--ink10);
+    overflow: hidden;
+    border-radius: 2px;
+  }
+  #successCanvas { position:absolute;inset:0;width:100%;height:100%; }
+  .success-text {
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;pointer-events:none;z-index:2;
+  }
+  .success-label {
+    font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.42em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+    opacity:0;animation:fadeUp .7s ease .6s forwards;
+  }
+  .success-headline {
+    font-family:var(--display-font,'Cormorant Garamond'),serif;
+    font-size:clamp(48px,7vw,72px);font-weight:300;letter-spacing:-.02em;
+    color:var(--ink);line-height:1;opacity:0;animation:fadeUp .8s ease .8s forwards;
+  }
+  .success-sub {
+    font-size:12.5px;color:var(--ink50);margin-top:10px;
+    text-align:center;line-height:1.6;opacity:0;animation:fadeUp .7s ease 1s forwards;
+  }
+  </style>
+
+  <script>
+  (function(){
+    const canvas = document.getElementById('successCanvas');
+    const ctx = canvas.getContext('2d');
+    let W,H,particles=[],raf;
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+    const isDark = bg.startsWith('#0')||bg.startsWith('#1');
+    const GOLD  = isDark?'rgba(200,136,10,':'rgba(168,109,0,';
+    const GREEN = isDark?'rgba(26,173,110,':'rgba(15,138,86,';
+    const BLUE  = isDark?'rgba(46,143,212,':'rgba(26,111,168,';
+    const PINK  = isDark?'rgba(212,32,110,':'rgba(176,26,94,';
+    const COLORS=[GOLD,GREEN,BLUE,PINK];
+    const skyline=[];
+
+    function resize(){
+      const r=canvas.parentElement.getBoundingClientRect();
+      W=canvas.width=r.width; H=canvas.height=r.height;
+    }
+    function buildSkyline(){
+      skyline.length=0;
+      const n=20; let x=0;
+      for(let i=0;i<n;i++){
+        const w=W/n;
+        skyline.push({x,w,h:H*.2+Math.random()*H*.3});
+        x+=w;
+      }
+    }
+    function spawnP(){
+      return {
+        x:Math.random()*W, y:H+8,
+        r:Math.random()*2+.5,
+        speed:Math.random()*.5+.25,
+        drift:(Math.random()-.5)*.35,
+        op:Math.random()*.45+.2,
+        color:COLORS[Math.floor(Math.random()*4)],
+        pulse:Math.random()*Math.PI*2,
+        ps:Math.random()*.025+.005
+      };
+    }
+    for(let i=0;i<55;i++){const p=spawnP();p.y=Math.random()*H;particles.push(p);}
+
+    function drawGrid(){
+      ctx.strokeStyle=isDark?'rgba(237,233,224,.022)':'rgba(28,26,23,.038)';
+      ctx.lineWidth=1;
+      for(let x=0;x<W;x+=38){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+      for(let y=0;y<H;y+=38){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    }
+    function drawSkyline(){
+      const g=ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,GOLD+'0)');g.addColorStop(.3,GOLD+'.07)');
+      g.addColorStop(.5,GOLD+'.12)');g.addColorStop(.7,GOLD+'.07)');g.addColorStop(1,GOLD+'0)');
+      ctx.fillStyle=g;
+      ctx.beginPath();ctx.moveTo(0,H);
+      skyline.forEach(b=>{
+        ctx.lineTo(b.x,H);ctx.lineTo(b.x,H-b.h);
+        ctx.lineTo(b.x+b.w*.55,H-b.h);ctx.lineTo(b.x+b.w*.55,H-b.h-7);
+        ctx.lineTo(b.x+b.w*.75,H-b.h-7);ctx.lineTo(b.x+b.w*.75,H-b.h);
+        ctx.lineTo(b.x+b.w,H-b.h);
+      });
+      ctx.lineTo(W,H);ctx.closePath();ctx.fill();
+    }
+    function drawArc(t){
+      const prog=Math.min(1,t/100);
+      ctx.beginPath();
+      for(let i=0;i<=80*prog;i++){
+        const pct=i/80;
+        const x=W*.08+pct*W*.84;
+        const y=H*.82-Math.pow(pct,.6)*H*.52;
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      const ag=ctx.createLinearGradient(W*.08,0,W*.92,0);
+      ag.addColorStop(0,GOLD+'0)');ag.addColorStop(.25,GOLD+'.25)');ag.addColorStop(1,GOLD+'.8)');
+      ctx.strokeStyle=ag;ctx.lineWidth=1.5;ctx.stroke();
+      if(prog>.8){
+        const tx=W*.08+prog*W*.84, ty=H*.82-Math.pow(prog,.6)*H*.52;
+        const glow=ctx.createRadialGradient(tx,ty,0,tx,ty,22);
+        glow.addColorStop(0,GOLD+'.6)');glow.addColorStop(1,GOLD+'0)');
+        ctx.fillStyle=glow;ctx.beginPath();ctx.arc(tx,ty,22,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle=GOLD+'1)';ctx.beginPath();ctx.arc(tx,ty,2.5,0,Math.PI*2);ctx.fill();
+        // small stars around tip
+        if(t>110){
+          for(let s=0;s<4;s++){
+            const a=(t*.04+s*Math.PI/2),d=10+Math.sin(t*.08+s)*4;
+            const sx=tx+Math.cos(a)*d, sy=ty+Math.sin(a)*d;
+            ctx.fillStyle=COLORS[s]+'0.6)';
+            ctx.beginPath();ctx.arc(sx,sy,1.2,0,Math.PI*2);ctx.fill();
+          }
+        }
+      }
+    }
+
+    let t=0;
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      drawGrid();drawSkyline();drawArc(t);
+      particles.forEach((p,i)=>{
+        p.y-=p.speed;p.x+=p.drift;p.pulse+=p.ps;
+        const op=p.op*(0.65+0.35*Math.sin(p.pulse));
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=p.color+op+')';ctx.fill();
+        if(p.y<-8)particles[i]=spawnP();
+      });
+      t++;raf=requestAnimationFrame(draw);
+    }
+
+    const obs=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){resize();buildSkyline();if(!raf)draw();}
+        else{cancelAnimationFrame(raf);raf=null;}
+      });
+    },{threshold:.1});
+    obs.observe(canvas.parentElement);
+    window.addEventListener('resize',()=>{resize();buildSkyline();});
+  })();
+  </script>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-statement">Let's build something<br>that lasts <em>forever</em>.</div>
+  <div class="closing-sig">Ran Zehavi · BD & Technology Partner · Ausculta (Proposed)</div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ── CURSOR ──
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+(function animRing(){
+  rx += (mx-rx)*.12; ry += (my-ry)*.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+
+// ── SCROLL PROGRESS ──
+const prog = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - innerHeight) * 100;
+  prog.style.width = pct + '%';
+});
+
+// ── SECTION REVEALS ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('section').forEach(s => obs.observe(s));
+
+// ── STAGGERED TABLE ROWS ──
+const tableObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const rows = e.target.querySelectorAll('tbody tr');
+      rows.forEach((r,i) => {
+        r.style.opacity = '0';
+        r.style.transform = 'translateX(-8px)';
+        setTimeout(() => {
+          r.style.transition = 'opacity .4s ease, transform .4s cubic-bezier(.23,1,.32,1)';
+          r.style.opacity = '1';
+          r.style.transform = 'none';
+        }, 40 + i * 30);
+      });
+      tableObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('table').forEach(t => tableObs.observe(t));
+
+// ── CARD STAGGER ──
+const cardObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const cards = e.target.querySelectorAll('.card');
+      cards.forEach((c,i) => {
+        c.style.opacity='0'; c.style.transform='translateY(16px)';
+        setTimeout(()=>{
+          c.style.transition='opacity .5s ease, transform .5s cubic-bezier(.23,1,.32,1)';
+          c.style.opacity='1'; c.style.transform='none';
+        }, i*100);
+      });
+      cardObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.cards-grid').forEach(g => cardObs.observe(g));
+</script>
+</body>
+</html>

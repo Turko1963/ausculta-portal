@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://turko1963.github.io/AscultaAI/ -->
+<html lang="en" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCULTA AI — AI Call Center Intelligence Platform</title>
+<link href="./ASCULTA AI — AI Call Center Intelligence Platform_files/css" rel="stylesheet">
+<link href="./ASCULTA AI — AI Call Center Intelligence Platform_files/css2" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════
+   THEME SYSTEM
+════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  --bg:       #05060f;
+  --bg2:      #0a0c1a;
+  --bg3:      #0f1122;
+  --bg4:      #151828;
+  --surface:  #1a1e35;
+  --border:   rgba(99,120,255,0.14);
+  --border2:  rgba(99,120,255,0.07);
+  --text:     #eceeff;
+  --text2:    #8890c0;
+  --text3:    #555a80;
+  --accent:   #6378ff;
+  --accent2:  #8b9dff;
+  --accent3:  rgba(99,120,255,0.10);
+  --green:    #22d98a;
+  --green2:   rgba(34,217,138,0.10);
+  --red:      #ff5566;
+  --red2:     rgba(255,85,102,0.10);
+  --gold:     #f0c060;
+  --gold2:    rgba(240,192,96,0.10);
+  --cyan:     #00d4ff;
+  --cyan2:    rgba(0,212,255,0.08);
+  --shadow:   0 8px 40px rgba(0,0,0,0.6);
+  --modal-bg: rgba(5,6,15,0.92);
+}
+[data-theme="light"] {
+  --bg:       #f0f2f8;
+  --bg2:      #ffffff;
+  --bg3:      #f5f6fd;
+  --bg4:      #eceffe;
+  --surface:  #ffffff;
+  --border:   rgba(43,70,232,0.13);
+  --border2:  rgba(43,70,232,0.07);
+  --text:     #0d1033;
+  --text2:    #3a4070;
+  --text3:    #8288b0;
+  --accent:   #2b46e8;
+  --accent2:  #4f66f5;
+  --accent3:  rgba(43,70,232,0.07);
+  --green:    #0a8f56;
+  --green2:   rgba(10,143,86,0.09);
+  --red:      #c9203a;
+  --red2:     rgba(201,32,58,0.09);
+  --gold:     #a85f00;
+  --gold2:    rgba(168,95,0,0.09);
+  --cyan:     #006fa8;
+  --cyan2:    rgba(0,111,168,0.08);
+  --shadow:   0 8px 40px rgba(13,16,51,0.12);
+  --modal-bg: rgba(240,242,248,0.94);
+}
+
+/* ════════════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  transition:background .35s ease,color .35s ease;
+  cursor:default;
+  font-feature-settings:'kern' 1,'liga' 1,'calt' 1;
+}
+/* Tabular numbers for all mono data */
+.hstat-num,.proof-val,.ind-num,.rc-val,.rm-val,.modal-stat-val,.slide-stat-val {
+  font-feature-settings:'tnum' 1,'ss01' 1;
+}
+/* Clash Display headline refinement */
+[class*="Clash"],[style*="Clash"] {
+  font-feature-settings:'kern' 1,'liga' 0;
+}
+[data-theme="light"] body{
+  background-image:radial-gradient(circle,rgba(43,70,232,0.055) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+a{color:inherit;text-decoration:none}
+button{border:none;background:none;cursor:pointer;font:inherit}
+
+/* ════════════════════════════════════════════════
+   CANVAS
+════════════════════════════════════════════════ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.scan{position:fixed;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),var(--cyan),transparent);
+  animation:scanAnim 7s linear infinite;z-index:1;opacity:.4;pointer-events:none}
+@keyframes scanAnim{from{top:-2px}to{top:100vh}}
+
+/* ════════════════════════════════════════════════
+   FLOATING CONTROLS
+════════════════════════════════════════════════ */
+.controls{
+  position:fixed;top:18px;right:20px;z-index:200;
+  display:flex;align-items:center;gap:8px;
+}
+.ctrl-btn{
+  display:flex;align-items:center;gap:7px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:24px;padding:7px 14px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text2);
+  letter-spacing:1px;text-transform:uppercase;
+  transition:all .25s;box-shadow:0 4px 16px rgba(0,0,0,.2);
+}
+.ctrl-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 20px rgba(99,120,255,.2)}
+.toggle-track{width:32px;height:17px;background:var(--accent3);border:1px solid var(--border);
+  border-radius:9px;position:relative;transition:all .3s}
+.toggle-knob{position:absolute;top:2px;left:2px;width:11px;height:11px;
+  border-radius:50%;background:var(--accent);transition:all .3s;box-shadow:0 0 6px var(--accent)}
+[data-theme="light"] .toggle-knob{left:17px}
+.present-btn{
+  background:linear-gradient(135deg,var(--accent),#5570ff);
+  color:#fff;border:none;border-radius:24px;padding:8px 18px;
+  font-family:'Clash Display',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;
+  box-shadow:0 4px 16px rgba(99,120,255,.35);transition:all .25s;
+}
+.present-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(99,120,255,.5)}
+
+/* ════════════════════════════════════════════════
+   PAGE WRAPPER
+════════════════════════════════════════════════ */
+.page{max-width:1400px;margin:0 auto;padding:44px 56px 80px;position:relative;z-index:2}
+
+/* ════════════════════════════════════════════════
+   SECTION LABELS
+════════════════════════════════════════════════ */
+.sec-bar{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.sec-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.sec-line{flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+
+/* ════════════════════════════════════════════════
+   CLICKABLE HINT
+════════════════════════════════════════════════ */
+.clickable{cursor:pointer;position:relative}
+.clickable::after{
+  content:'↗ CLICK FOR MORE';
+  position:absolute;top:8px;right:8px;
+  font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:1.5px;
+  color:var(--accent);opacity:0;transition:opacity .2s;
+  text-transform:uppercase;
+}
+.clickable:hover::after{opacity:.7}
+.clickable:hover{border-color:var(--accent)!important}
+
+/* ════════════════════════════════════════════════
+   HEADER
+════════════════════════════════════════════════ */
+.header{display:flex;flex-direction:column;gap:22px;padding-bottom:36px;margin-bottom:36px;
+  border-bottom:1px solid var(--border);position:relative}
+.header::after{content:'';position:absolute;bottom:-1px;left:0;width:220px;height:2px;
+  background:linear-gradient(90deg,var(--accent),transparent)}
+.header-top{display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px}
+.logo-row{display:flex;align-items:center;gap:16px;margin-bottom:10px}
+.logo{font-family:'Clash Display',sans-serif;font-size:82px;font-weight:700;letter-spacing:1px;
+  line-height:1;padding-right:14px;display:inline-block;
+  background:linear-gradient(135deg,var(--accent2) 0%,var(--accent) 40%,var(--cyan) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(99,120,255,.45));
+  animation:logoGlow 3s ease-in-out infinite alternate}
+@keyframes logoGlow{
+  from{filter:drop-shadow(0 0 15px rgba(99,120,255,.3))}
+  to{filter:drop-shadow(0 0 40px rgba(99,120,255,.65))}
+}
+[data-theme="light"] .logo{background:linear-gradient(135deg,#1a35d8,#2b46e8 45%,#0069a0);
+  -webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(0 2px 10px rgba(43,70,232,.2));animation:logoGlowL 3s ease-in-out infinite alternate}
+@keyframes logoGlowL{from{filter:drop-shadow(0 1px 6px rgba(43,70,232,.15))}
+  to{filter:drop-shadow(0 3px 18px rgba(43,70,232,.32))}}
+.logo-pills{display:flex;flex-direction:column;gap:5px}
+.pill{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;border:1px solid var(--border);
+  background:var(--accent3);color:var(--accent2);white-space:nowrap}
+.pill.live{border-color:rgba(34,217,138,.3);background:var(--green2);color:var(--green);
+  display:flex;align-items:center;gap:6px}
+[data-theme="light"] .pill{background:rgba(43,70,232,.07);border-color:rgba(43,70,232,.15);color:#2b46e8}
+[data-theme="light"] .pill.live{background:rgba(10,143,86,.08);border-color:rgba(10,143,86,.2);color:#0a8f56}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+.tagline{font-size:15.5px;color:var(--text2);line-height:1.6;max-width:660px}
+.tagline em{color:var(--text);font-style:normal;font-weight:600}
+.gtm-badge{
+  background:linear-gradient(135deg,rgba(240,192,96,.15),rgba(240,192,96,.05));
+  border:1px solid rgba(240,192,96,.3);border-radius:6px;padding:12px 20px;
+  text-align:center;white-space:nowrap;
+}
+[data-theme="light"] .gtm-badge{background:rgba(168,95,0,.06);border-color:rgba(168,95,0,.25)}
+.gtm-badge-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.gtm-badge-val{font-family:'Clash Display',sans-serif;font-size:24px;font-weight:700;color:var(--gold);line-height:1}
+.gtm-badge-sub{font-size:11px;color:var(--text3);margin-top:3px}
+
+/* HERO STATS */
+.hero-stats{display:flex;gap:3px}
+.hstat{flex:1;background:var(--bg2);border:1px solid var(--border);padding:18px 24px;
+  text-align:center;transition:all .25s;position:relative;overflow:hidden;cursor:pointer}
+.hstat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .25s}
+.hstat:hover::before{opacity:1}
+.hstat:hover{border-color:var(--accent);background:var(--accent3);transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(99,120,255,.2)}
+[data-theme="light"] .hstat{background:#fff;box-shadow:0 1px 4px rgba(13,16,51,.07)}
+[data-theme="light"] .hstat:hover{box-shadow:0 8px 24px rgba(43,70,232,.15)}
+.hstat-num{font-family:'Clash Display',sans-serif;font-size:36px;font-weight:700;line-height:1;margin-bottom:5px}
+.hstat-num.g{color:var(--green)}.hstat-num.r{color:var(--red)}.hstat-num.go{color:var(--gold)}.hstat-num.c{color:var(--cyan)}
+.hstat-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);
+  text-transform:uppercase;letter-spacing:1.2px}
+.hstat-sub{font-size:10px;color:var(--text3);margin-top:3px}
+
+/* ════════════════════════════════════════════════
+   PROBLEM SECTION
+════════════════════════════════════════════════ */
+.problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:28px}
+.prob-card{background:var(--bg2);border:1px solid rgba(255,85,102,.15);border-top:3px solid var(--red);
+  padding:22px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.prob-card::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at top right,rgba(255,85,102,.06),transparent 60%);opacity:0;transition:opacity .3s}
+.prob-card:hover::before{opacity:1}
+.prob-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(255,85,102,.15);
+  border-color:rgba(255,85,102,.4)}
+[data-theme="light"] .prob-card{background:#fff;box-shadow:0 1px 4px rgba(201,32,58,.06)}
+[data-theme="light"] .prob-card:hover{box-shadow:0 12px 32px rgba(201,32,58,.12)}
+.prob-icon{font-size:28px;margin-bottom:12px}
+.prob-title{font-family:'Clash Display',sans-serif;font-size:15px;font-weight:700;color:var(--red);margin-bottom:8px}
+.prob-desc{font-size:12px;color:var(--text2);line-height:1.55}
+.prob-stat{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red);
+  margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,85,102,.15)}
+
+/* ════════════════════════════════════════════════
+   INDUSTRY NUMBERS
+════════════════════════════════════════════════ */
+.industry-bar{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--accent);
+  margin-bottom:28px;overflow:hidden}
+[data-theme="light"] .industry-bar{box-shadow:0 4px 16px rgba(43,70,232,.08)}
+.ind-header{display:flex;align-items:center;gap:10px;padding:12px 24px;
+  background:var(--accent3);border-bottom:1px solid var(--border)}
+.ind-title{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent2);letter-spacing:2px;text-transform:uppercase}
+.ind-grid{display:grid;grid-template-columns:repeat(6,1fr)}
+.ind-cell{padding:20px 18px;border-right:1px solid var(--border);cursor:pointer;transition:all .25s;position:relative}
+.ind-cell:last-child{border-right:none}
+.ind-cell:hover{background:var(--accent3)}
+.ind-num{font-family:'Clash Display',sans-serif;font-size:28px;font-weight:700;line-height:1;margin-bottom:5px}
+.ind-label{font-size:11px;color:var(--text2);line-height:1.4}
+.ind-source{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text3);margin-top:5px}
+
+/* ════════════════════════════════════════════════
+   THREE PILLARS
+════════════════════════════════════════════════ */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:28px}
+.pillar{background:var(--bg2);padding:28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;border:1px solid var(--border)}
+.pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.pillar.risk::before{background:linear-gradient(90deg,var(--red),transparent)}
+.pillar.agent::before{background:linear-gradient(90deg,var(--accent),transparent)}
+.pillar.client::before{background:linear-gradient(90deg,var(--green),transparent)}
+.pillar:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.pillar.risk:hover{box-shadow:0 16px 48px rgba(255,85,102,.15)}
+.pillar.agent:hover{box-shadow:0 16px 48px rgba(99,120,255,.15)}
+.pillar.client:hover{box-shadow:0 16px 48px rgba(34,217,138,.12)}
+[data-theme="light"] .pillar{background:#fff;box-shadow:0 2px 8px rgba(13,16,51,.07)}
+.pillar-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);margin-bottom:14px}
+.pillar-icon{font-size:32px;margin-bottom:12px;display:block}
+.pillar-title{font-family:'Clash Display',sans-serif;font-size:24px;font-weight:700;margin-bottom:6px}
+.pillar-sub{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.pillar.risk .pillar-title{color:var(--red)}
+.pillar.agent .pillar-title{color:var(--accent2)}
+.pillar.client .pillar-title{color:var(--green)}
+.pillar-modules{display:flex;flex-direction:column;gap:8px}
+.pmod{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--text2)}
+.pmod-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.pillar.risk .pmod-dot{background:var(--red)}
+.pillar.agent .pmod-dot{background:var(--accent)}
+.pillar.client .pmod-dot{background:var(--green)}
+.pmod-name{font-weight:600;color:var(--text)}
+.pillar-cta{display:flex;align-items:center;gap:6px;margin-top:20px;padding-top:16px;
+  border-top:1px solid var(--border2);font-size:11px;font-weight:600;letter-spacing:.5px}
+.pillar.risk .pillar-cta{color:var(--red)}
+.pillar.agent .pillar-cta{color:var(--accent2)}
+.pillar.client .pillar-cta{color:var(--green)}
+.arrow-icon{font-size:14px;transition:transform .2s}
+.pillar:hover .arrow-icon{transform:translateX(4px)}
+
+/* ════════════════════════════════════════════════
+   PROOF STATS
+════════════════════════════════════════════════ */
+.proof-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:28px}
+.proof-card{background:var(--bg3);padding:26px;border:1px solid var(--border);
+  cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.proof-card:hover{background:var(--bg4);transform:translateY(-2px)}
+.proof-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;opacity:0;transition:opacity .25s}
+.proof-card.g::after{background:linear-gradient(90deg,var(--green),transparent)}
+.proof-card.a::after{background:linear-gradient(90deg,var(--accent),transparent)}
+.proof-card.r::after{background:linear-gradient(90deg,var(--red),transparent)}
+.proof-card.c::after{background:linear-gradient(90deg,var(--cyan),transparent)}
+.proof-card:hover::after{opacity:1}
+[data-theme="light"] .proof-card{background:#fff;box-shadow:0 1px 4px rgba(13,16,51,.06)}
+.proof-val{font-family:'Clash Display',sans-serif;font-size:54px;font-weight:700;line-height:1;margin-bottom:6px}
+.proof-val.g{color:var(--green)}.proof-val.a{color:var(--accent2)}
+.proof-val.r{color:var(--red)}.proof-val.c{color:var(--cyan)}
+.proof-label{font-size:14px;font-weight:600;margin-bottom:6px}
+.proof-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.proof-tag{display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9px;
+  padding:3px 9px;border-radius:3px;border:1px solid transparent}
+.proof-tag.g{color:var(--green);background:var(--green2);border-color:rgba(34,217,138,.2)}
+.proof-tag.a{color:var(--accent2);background:var(--accent3);border-color:var(--border)}
+.proof-tag.r{color:var(--red);background:var(--red2);border-color:rgba(255,85,102,.2)}
+.proof-tag.c{color:var(--cyan);background:var(--cyan2);border-color:rgba(0,212,255,.2)}
+
+/* ════════════════════════════════════════════════
+   QA COMPARE
+════════════════════════════════════════════════ */
+.compare-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:3px;margin-bottom:28px;cursor:pointer}
+.compare-side{background:var(--bg2);padding:24px;border:1px solid var(--border);transition:all .25s}
+.compare-side:hover{border-color:var(--accent)}
+[data-theme="light"] .compare-side{background:#fff;box-shadow:0 2px 8px rgba(13,16,51,.06)}
+.compare-vs{background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;
+  justify-content:center;padding:0 20px;font-family:'Clash Display',sans-serif;font-size:13px;font-weight:700;color:var(--text3)}
+.cmp-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border2)}
+.cmp-label.bad{color:var(--red)}.cmp-label.good{color:var(--green)}
+.cmp-row{display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--border2);font-size:13px}
+.cmp-row:last-child{border-bottom:none}
+.cmp-key{color:var(--text2)}
+.cmp-val{font-family:'JetBrains Mono',monospace;font-size:12px}
+.cmp-val.bad{color:var(--red)}.cmp-val.good{color:var(--green)}
+
+/* ════════════════════════════════════════════════
+   ROI SECTION
+════════════════════════════════════════════════ */
+.roi-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:28px;cursor:pointer}
+.roi-left{background:var(--bg2);padding:28px;border:1px solid var(--border);transition:all .25s}
+.roi-left:hover{border-color:var(--gold)}
+.roi-right{background:var(--bg3);padding:28px;border:1px solid var(--border);transition:all .25s}
+.roi-right:hover{border-color:var(--green)}
+[data-theme="light"] .roi-left,[data-theme="light"] .roi-right{background:#fff;box-shadow:0 2px 8px rgba(13,16,51,.06)}
+.roi-title{font-family:'Clash Display',sans-serif;font-size:17px;font-weight:700;margin-bottom:18px}
+.roi-calc{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.rc{padding:16px;border-radius:5px;border:1px solid var(--border)}
+.rc.cost{background:var(--red2);border-color:rgba(255,85,102,.2)}
+.rc.save{background:var(--accent3);border-color:var(--border)}
+.rc.rev{background:var(--green2);border-color:rgba(34,217,138,.2)}
+.rc.net{background:var(--gold2);border-color:rgba(240,192,96,.2)}
+.rc-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.rc.cost .rc-lbl{color:var(--red)}.rc.save .rc-lbl{color:var(--accent2)}
+.rc.rev .rc-lbl{color:var(--green)}.rc.net .rc-lbl{color:var(--gold)}
+.rc-val{font-family:'Clash Display',sans-serif;font-size:30px;font-weight:700;line-height:1}
+.rc.cost .rc-val{color:var(--red)}.rc.save .rc-val{color:var(--accent2)}
+.rc.rev .rc-val{color:var(--green)}.rc.net .rc-val{color:var(--gold)}
+.rc-sub{font-size:11px;color:var(--text3);margin-top:3px}
+.roi-note{font-size:12px;color:var(--text2);padding:12px 16px;background:var(--accent3);
+  border:1px solid var(--border);border-radius:4px;line-height:1.6}
+.roi-note strong{color:var(--accent2)}
+.roi-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rm{padding:14px;background:var(--bg2);border:1px solid var(--border);border-radius:4px}
+[data-theme="light"] .rm{background:#f5f6fd}
+.rm-val{font-family:'Clash Display',sans-serif;font-size:24px;font-weight:700;line-height:1;margin-bottom:3px}
+.rm-lbl{font-size:11px;color:var(--text2);line-height:1.4}
+
+/* ════════════════════════════════════════════════
+   TECH STRIP
+════════════════════════════════════════════════ */
+.tech-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin-bottom:28px}
+.tc{background:var(--bg3);border:1px solid var(--border);padding:18px;text-align:center;
+  cursor:pointer;transition:all .25s}
+.tc:hover{background:var(--accent3);border-color:var(--accent);transform:translateY(-2px)}
+[data-theme="light"] .tc{background:#f5f6fd;box-shadow:0 1px 3px rgba(13,16,51,.05)}
+.tc-icon{font-size:26px;margin-bottom:8px}
+.tc-title{font-size:12px;font-weight:600;margin-bottom:4px}
+.tc-desc{font-size:11px;color:var(--text2);line-height:1.4}
+
+/* ════════════════════════════════════════════════
+   INTEGRATIONS
+════════════════════════════════════════════════ */
+.int-bar{display:flex;gap:3px;margin-bottom:28px;align-items:stretch}
+.int-tag{background:var(--accent3);border:1px solid var(--border);padding:14px 20px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent2);
+  letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;white-space:nowrap}
+.int-items{flex:1;background:var(--bg2);border:1px solid var(--border);
+  display:flex;align-items:center;padding:14px 24px;gap:24px;flex-wrap:wrap}
+.int-item{font-size:13px;display:flex;align-items:center;gap:7px;cursor:pointer;
+  padding:4px 8px;border-radius:4px;transition:all .2s}
+.int-item:hover{background:var(--accent3);color:var(--accent2)}
+.int-item::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+.cert-strip{background:var(--bg3);border:1px solid var(--border);padding:14px 18px;
+  display:flex;align-items:center;gap:8px}
+.cert{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);
+  border:1px solid rgba(34,217,138,.25);background:var(--green2);padding:4px 9px;border-radius:3px}
+[data-theme="light"] .cert{color:#0a8f56;background:rgba(10,143,86,.08);border-color:rgba(10,143,86,.2)}
+
+/* ════════════════════════════════════════════════
+   FOOTER / CTA
+════════════════════════════════════════════════ */
+.footer-section{
+  background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  border:1px solid var(--border);border-top:2px solid var(--accent);
+  padding:44px 48px;display:grid;grid-template-columns:1fr auto;
+  gap:40px;align-items:center;position:relative;overflow:hidden;margin-bottom:28px;
+}
+.footer-section::before{content:'';position:absolute;right:-100px;top:50%;transform:translateY(-50%);
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle,rgba(99,120,255,.06),transparent 70%);pointer-events:none}
+[data-theme="light"] .footer-section{background:#fff;box-shadow:0 4px 24px rgba(43,70,232,.08)}
+.footer-cta{font-family:'Clash Display',sans-serif;font-size:30px;font-weight:700;line-height:1.25;
+  margin-bottom:12px;background:linear-gradient(135deg,var(--text),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="light"] .footer-cta{background:linear-gradient(135deg,#0d1033,#2b46e8);
+  -webkit-background-clip:text;background-clip:text}
+.footer-sub{font-size:13px;color:var(--text2);max-width:560px;line-height:1.7}
+.footer-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+.footer-logo{font-family:'Clash Display',sans-serif;font-size:30px;font-weight:700;letter-spacing:1px;
+  background:linear-gradient(135deg,var(--accent2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+[data-theme="light"] .footer-logo{background:linear-gradient(135deg,#2b46e8,#006fa8);
+  -webkit-background-clip:text;background-clip:text}
+.footer-meta{font-size:11px;color:var(--text3);text-align:right;line-height:1.8}
+.demo-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--accent),#5570ff);
+  color:#fff;font-family:'Clash Display',sans-serif;font-size:15px;font-weight:700;
+  padding:16px 36px;border-radius:6px;text-decoration:none;
+  box-shadow:0 6px 28px rgba(99,120,255,.4);transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.demo-btn::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity .25s}
+.demo-btn:hover::before{opacity:1}
+.demo-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(99,120,255,.55)}
+.demo-btn-dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.9);
+  animation:pulse 1.5s ease-in-out infinite}
+[data-theme="light"] .demo-btn{background:linear-gradient(135deg,#2b46e8,#1a35d8);
+  box-shadow:0 6px 28px rgba(43,70,232,.35)}
+.roi-badge{background:linear-gradient(135deg,var(--gold2),rgba(240,192,96,.03));
+  border:1px solid rgba(240,192,96,.25);padding:8px 18px;border-radius:3px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gold);letter-spacing:1.2px;text-transform:uppercase}
+[data-theme="light"] .roi-badge{background:rgba(168,95,0,.06);border-color:rgba(168,95,0,.2);color:#a85f00}
+
+/* ════════════════════════════════════════════════
+   MODAL SYSTEM
+════════════════════════════════════════════════ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:var(--modal-bg);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+  padding:40px;
+}
+.modal-overlay.active{opacity:1;pointer-events:all}
+.modal{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;width:100%;max-width:860px;max-height:82vh;
+  overflow-y:auto;position:relative;
+  box-shadow:0 32px 80px rgba(0,0,0,.6);
+  transform:translateY(20px) scale(.97);transition:all .3s;
+}
+.modal-overlay.active .modal{transform:translateY(0) scale(1)}
+[data-theme="light"] .modal{background:#fff;box-shadow:0 32px 80px rgba(13,16,51,.18)}
+.modal-header{
+  position:sticky;top:0;z-index:10;background:var(--bg2);
+  border-bottom:1px solid var(--border);padding:22px 28px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+[data-theme="light"] .modal-header{background:#fff}
+.modal-close{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);
+  font-size:16px;color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all .2s;
+}
+.modal-close:hover{background:var(--red2);border-color:var(--red);color:var(--red)}
+.modal-title{font-family:'Clash Display',sans-serif;font-size:24px;font-weight:700}
+.modal-body{padding:28px}
+.modal-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.modal-stat{background:var(--bg3);border:1px solid var(--border);padding:18px;border-radius:4px;text-align:center}
+[data-theme="light"] .modal-stat{background:#f5f6fd}
+.modal-stat-val{font-family:'Clash Display',sans-serif;font-size:34px;font-weight:700;margin-bottom:4px}
+.modal-stat-lbl{font-size:11px;color:var(--text2)}
+.modal-section{margin-bottom:22px}
+.modal-section-title{font-family:'Clash Display',sans-serif;font-size:16px;font-weight:700;
+  margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border2)}
+.modal-list{list-style:none}
+.modal-list li{font-size:13px;color:var(--text2);padding:7px 0;
+  border-bottom:1px solid var(--border2);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.modal-list li:last-child{border-bottom:none}
+.modal-list li::before{content:'›';color:var(--accent);font-size:15px;flex-shrink:0;line-height:1.35}
+.modal-chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.modal-chip{font-family:'JetBrains Mono',monospace;font-size:10px;padding:4px 10px;border-radius:4px;border:1px solid var(--border)}
+.modal-chip.g{color:var(--green);background:var(--green2);border-color:rgba(34,217,138,.25)}
+.modal-chip.a{color:var(--accent2);background:var(--accent3);border-color:var(--border)}
+.modal-chip.r{color:var(--red);background:var(--red2);border-color:rgba(255,85,102,.25)}
+.modal-chip.go{color:var(--gold);background:var(--gold2);border-color:rgba(240,192,96,.25)}
+
+/* Progress bar in modal */
+.progress-bar{background:var(--bg3);border-radius:4px;height:8px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:4px;transition:width 1s ease}
+
+/* ════════════════════════════════════════════════
+   PRESENTATION MODE
+════════════════════════════════════════════════ */
+body.presenting{overflow:hidden}
+.present-overlay{
+  position:fixed;inset:0;z-index:400;background:var(--bg);
+  display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .4s;
+}
+.present-overlay.active{opacity:1;pointer-events:all}
+.present-slide{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:80px 120px;position:relative;overflow:hidden;
+}
+.slide-bg-num{
+  position:absolute;right:-30px;top:50%;transform:translateY(-50%);
+  font-family:'Clash Display',sans-serif;font-size:400px;font-weight:800;
+  color:var(--accent);opacity:.03;line-height:1;pointer-events:none;user-select:none;
+}
+.slide-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.slide-label::before{content:'';width:40px;height:2px;background:var(--accent)}
+.slide-title{font-family:'Clash Display',sans-serif;font-size:68px;font-weight:700;line-height:1.08;
+  margin-bottom:24px;max-width:900px}
+.slide-subtitle{font-size:20px;color:var(--text2);line-height:1.6;max-width:720px;margin-bottom:40px}
+.slide-stats{display:flex;gap:4px}
+.slide-stat{padding:24px 36px;border:1px solid var(--border);background:var(--bg2);text-align:center;min-width:160px}
+.slide-stat-val{font-family:'Clash Display',sans-serif;font-size:52px;font-weight:700;line-height:1}
+.slide-stat-lbl{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);
+  text-transform:uppercase;letter-spacing:1.5px;margin-top:6px}
+.slide-points{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:900px}
+.slide-point{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);
+  padding:20px 24px}
+.slide-point-title{font-weight:700;font-size:15px;margin-bottom:6px}
+.slide-point-desc{font-size:13px;color:var(--text2);line-height:1.5}
+.present-nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:410;
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:16px 40px;display:flex;justify-content:space-between;align-items:center;
+}
+.present-progress{flex:1;height:3px;background:var(--border);border-radius:2px;margin:0 32px;position:relative}
+.present-progress-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--cyan));
+  transition:width .4s ease}
+.nav-btn{font-family:'Clash Display',sans-serif;font-size:13px;font-weight:700;
+  padding:10px 22px;border:1px solid var(--border);border-radius:4px;
+  color:var(--text2);transition:all .2s}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:#5570ff;box-shadow:0 4px 16px rgba(99,120,255,.4)}
+.slide-counter{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text3)}
+.close-present{position:fixed;top:20px;right:20px;z-index:420;
+  background:var(--bg2);border:1px solid var(--border);border-radius:24px;
+  padding:8px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1px;
+  color:var(--text2);cursor:pointer;transition:all .2s;text-transform:uppercase}
+.close-present:hover{border-color:var(--red);color:var(--red)}
+
+/* ════════════════════════════════════════════════
+   LOGO AI BUBBLE
+════════════════════════════════════════════════ */
+.logo-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+.ai-bubble {
+  position: absolute;
+  top: -10px;
+  right: -2px;
+  background: linear-gradient(135deg, var(--accent), var(--cyan));
+  color: #fff;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  line-height: 1;
+  box-shadow: 0 2px 12px rgba(99,120,255,0.5), 0 0 0 2px var(--bg);
+  animation: bubblePop 2.5s ease-in-out infinite alternate;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+[data-theme="light"] .ai-bubble {
+  background: linear-gradient(135deg, #2b46e8, #006fa8);
+  box-shadow: 0 2px 12px rgba(43,70,232,0.35), 0 0 0 2px var(--bg);
+}
+@keyframes bubblePop {
+  from { transform: translateY(0px) scale(1); box-shadow: 0 2px 12px rgba(99,120,255,0.45), 0 0 0 2px var(--bg); }
+  to   { transform: translateY(-3px) scale(1.04); box-shadow: 0 6px 20px rgba(99,120,255,0.65), 0 0 0 2px var(--bg); }
+}
+
+/* Footer logo AI bubble (smaller) */
+.footer-logo-wrap {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+.footer-logo-wrap .ai-bubble {
+  font-size: 9px;
+  padding: 2px 6px;
+  top: -7px;
+  right: -2px;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.page>*{animation:fadeUp .5s ease forwards;opacity:0}
+.page>*:nth-child(1){animation-delay:.05s}.page>*:nth-child(2){animation-delay:.1s}
+.page>*:nth-child(3){animation-delay:.15s}.page>*:nth-child(4){animation-delay:.2s}
+.page>*:nth-child(5){animation-delay:.25s}.page>*:nth-child(6){animation-delay:.3s}
+.page>*:nth-child(7){animation-delay:.35s}.page>*:nth-child(8){animation-delay:.4s}
+.page>*:nth-child(9){animation-delay:.45s}.page>*:nth-child(10){animation-delay:.5s}
+.page>*:nth-child(11){animation-delay:.55s}.page>*:nth-child(12){animation-delay:.6s}
+
+@media print{#bg-canvas,.scan,.controls,.modal-overlay,.present-overlay{display:none}}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas" width="1470" height="801"></canvas>
+<div class="scan"></div>
+
+<!-- ═══ FLOATING CONTROLS ═══ -->
+<div class="controls">
+  <button class="ctrl-btn" onclick="toggleTheme()">
+    <div class="toggle-track"><div class="toggle-knob"></div></div>
+    <span id="theme-lbl">Dark</span>
+  </button>
+  <button class="present-btn" onclick="startPresentation()">▶ Present Mode</button>
+</div>
+
+<!-- ═══ MAIN PAGE ═══ -->
+<div class="page">
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div>
+      <div class="logo-row">
+        <div class="logo-wrap">
+          <div class="logo">ASCULTA</div>
+          <span class="ai-bubble">AI</span>
+        </div>
+        <div class="logo-pills">
+          <div class="pill">AI-Powered Intelligence</div>
+          <div class="pill live"><div class="dot"></div>Real-Time Processing</div>
+          <div class="pill">#1 for Sales &amp; Customer Service</div>
+        </div>
+      </div>
+      <div class="tagline">
+        <em>The world's most valued AI platform for sales and customer service call centers — in any language.</em> Delivers 100% call monitoring, real-time compliance enforcement, fraud prevention, agent optimization, and predictive customer analytics — for banks, financial institutions, and enterprises across the GCC and beyond.
+      </div>
+    </div>
+    <div class="gtm-badge" onclick="openModal(&#39;gtm&#39;)">
+      <div class="gtm-badge-label">Deployments</div>
+      <div class="gtm-badge-val">Enterprise</div>
+      <div class="gtm-badge-sub">GCC · MENA · Global</div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat clickable" onclick="openModal(&#39;coverage&#39;)">
+      <div class="hstat-num g" data-target="100" data-suffix="%">100%</div>
+      <div class="hstat-label">Call Coverage</div>
+      <div class="hstat-sub">vs 2–5% manual</div>
+    </div>
+    <div class="hstat clickable" onclick="openModal(&#39;cost&#39;)">
+      <div class="hstat-num r" data-target="90" data-suffix="%">90%</div>
+      <div class="hstat-label">Cost Reduction</div>
+      <div class="hstat-sub">vs manual QA teams</div>
+    </div>
+    <div class="hstat clickable" onclick="openModal(&#39;chargeback&#39;)">
+      <div class="hstat-num go" data-target="98" data-suffix="%">98%</div>
+      <div class="hstat-label">Less Chargebacks</div>
+      <div class="hstat-sub">in 90 days</div>
+    </div>
+    <div class="hstat clickable" onclick="openModal(&#39;setup&#39;)">
+      <div class="hstat-num c" data-target="48" data-suffix="h">48h</div>
+      <div class="hstat-label">Go-Live Time</div>
+      <div class="hstat-sub">non-disruptive</div>
+    </div>
+    <div class="hstat clickable" onclick="openModal(&#39;roi&#39;)">
+      <div class="hstat-num g">4–6</div>
+      <div class="hstat-label">Month ROI</div>
+      <div class="hstat-sub">payback period</div>
+    </div>
+    <div class="hstat clickable" onclick="openModal(&#39;market&#39;)">
+      <div class="hstat-num c">$500B+</div>
+      <div class="hstat-label">Market Size</div>
+      <div class="hstat-sub">growing to $741B</div>
+    </div>
+    <div class="hstat clickable" onclick="openModal(&#39;language&#39;)">
+      <div class="hstat-num g">Any</div>
+      <div class="hstat-label">Language</div>
+      <div class="hstat-sub">sales &amp; service, global</div>
+    </div>
+  </div>
+</header>
+
+<!-- INDUSTRY CONTEXT -->
+<div class="sec-bar">
+  <div class="sec-tag">Market Intelligence</div><div class="sec-line"></div>
+  <div class="sec-tag">Why Now</div>
+</div>
+<div class="industry-bar" onclick="openModal(&#39;market&#39;)">
+  <div class="ind-header">
+    <div class="dot"></div>
+    <div class="ind-title">The Most Valued Call Center AI for Sales &amp; Customer Service — In Any Language, In Any Market</div>
+  </div>
+  <div class="ind-grid">
+    <div class="ind-cell clickable" onclick="event.stopPropagation();openModal(&#39;market&#39;)">
+      <div class="ind-num" style="color:var(--accent2)" data-target="500" data-prefix="$" data-suffix="B+">$500B+</div>
+      <div class="ind-label">Global market size, reaching $741B by 2030</div>
+      <div class="ind-source">Grand View Research, 2024</div>
+    </div>
+    <div class="ind-cell clickable" onclick="event.stopPropagation();openModal(&#39;fraud&#39;)">
+      <div class="ind-num" style="color:var(--red)" data-target="3" data-prefix="$" data-suffix="B">$3B</div>
+      <div class="ind-label">Annual losses from call center fraud in financial services</div>
+      <div class="ind-source">ACFE Report, 2023</div>
+    </div>
+    <div class="ind-cell clickable" onclick="event.stopPropagation();openModal(&#39;compliance&#39;)">
+      <div class="ind-num" style="color:var(--gold)" data-target="60" data-suffix="%">60%</div>
+      <div class="ind-label">Compliance violations from agent-customer conversations</div>
+      <div class="ind-source">Deloitte Regulatory Insights</div>
+    </div>
+    <div class="ind-cell clickable" onclick="event.stopPropagation();openModal(&#39;roi&#39;)">
+      <div class="ind-num" style="color:var(--green)" data-target="25" data-suffix="x">25x</div>
+      <div class="ind-label">ROI of AI-driven QA vs. manual review</div>
+      <div class="ind-source">McKinsey, 2024</div>
+    </div>
+    <div class="ind-cell clickable" onclick="event.stopPropagation();openModal(&#39;market&#39;)">
+      <div class="ind-num" style="color:var(--cyan)" data-target="70" data-suffix="%">70%</div>
+      <div class="ind-label">CX leaders say AI is critical to compliance strategy</div>
+      <div class="ind-source">Gartner CX Survey</div>
+    </div>
+    <div class="ind-cell clickable" onclick="event.stopPropagation();openModal(&#39;roi&#39;)">
+      <div class="ind-num" style="color:var(--accent2)">4–6mo</div>
+      <div class="ind-label">Typical ASCULTA payback period for regulated enterprises</div>
+      <div class="ind-source">ASCULTA client data</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div class="sec-bar">
+  <div class="sec-tag">The Problem</div><div class="sec-line"></div>
+  <div class="sec-tag">Why Every Sales &amp; Service Center Needs ASCULTA</div>
+</div>
+<div class="problem-grid">
+  <div class="prob-card" onclick="openModal(&#39;problem-coverage&#39;)">
+    <div class="prob-icon">🔍</div>
+    <div class="prob-title">2–5% Monitored</div>
+    <div class="prob-desc">Manual QA samples a tiny fraction. 95%+ of conversations are completely invisible — every compliance failure, fraud attempt, and churn signal goes unseen.</div>
+    <div class="prob-stat">95% of calls = zero visibility</div>
+  </div>
+  <div class="prob-card" onclick="openModal(&#39;problem-risk&#39;)">
+    <div class="prob-icon">⚠️</div>
+    <div class="prob-title">100% Risk Coverage Needed</div>
+    <div class="prob-desc">Regulatory violations and fraud go undetected for 7–30 days until penalties land. Traditional QA is reactive — ASCULTA is real-time preventive.</div>
+    <div class="prob-stat">Avg detection lag: 7–30 days</div>
+  </div>
+  <div class="prob-card" onclick="openModal(&#39;problem-cost&#39;)">
+    <div class="prob-icon">💸</div>
+    <div class="prob-title">Prohibitive QA Costs</div>
+    <div class="prob-desc">Manual QA teams cost $5K–$15K per reviewer monthly — delivering inconsistent, biased, and incomplete coverage at fractional scale.</div>
+    <div class="prob-stat">$15K/mo per reviewer · still only 3%</div>
+  </div>
+  <div class="prob-card" onclick="openModal(&#39;problem-intelligence&#39;)">
+    <div class="prob-icon">📉</div>
+    <div class="prob-title">Lost Revenue Intelligence</div>
+    <div class="prob-desc">Organizations capture under 10% of customer intelligence from calls. Buying signals, churn risk, upsell opportunities — all lost forever to incomplete notes.</div>
+    <div class="prob-stat">&lt;10% of call intelligence captured</div>
+  </div>
+</div>
+
+<!-- THREE PILLARS -->
+<div class="sec-bar">
+  <div class="sec-tag">Platform Architecture</div><div class="sec-line"></div>
+  <div class="sec-tag">Three Intelligence Pillars</div>
+</div>
+<div class="pillars">
+  <div class="pillar risk" onclick="openModal(&#39;pillar-risk&#39;)">
+    <div class="pillar-num">01 / RISK MANAGEMENT</div>
+    <span class="pillar-icon">🛡️</span>
+    <div class="pillar-title">Risk Management</div>
+    <div class="pillar-sub">Sales &amp; Service · Compliance · Fraud · Any Language</div>
+    <div class="pillar-modules">
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Live Compliance Monitoring</span> — SAMA, CITC, SFDA, every sentence, every call</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Chargeback Prevention</span> — 8–12% → &lt;0.5% in 90 days</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Anti-Fraud Engine</span> — Real-time blocking of unauthorized transfers</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Live Threat Detector</span> — ML scoring every active call, &lt;1s response</span></div>
+    </div>
+    <div class="pillar-cta">Explore Risk Intelligence <span class="arrow-icon">→</span></div>
+  </div>
+  <div class="pillar agent" onclick="openModal(&#39;pillar-agent&#39;)">
+    <div class="pillar-num">02 / AGENT OPTIMIZATION</div>
+    <span class="pillar-icon">⚡</span>
+    <div class="pillar-title">Agent Optimization</div>
+    <div class="pillar-sub">Sales Performance · Training · Motivation · Any Language</div>
+    <div class="pillar-modules">
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Live Agent Guidance</span> — Real-time on-screen prompts, objection scripts, upsell signals</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Personalized Training</span> — AI-generated modules from individual call history</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Daily Motivation</span> — Gamification, micro-achievement recognition, goal tracking</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Smart Auto-Docs</span> — Zero manual CRM entry, instant sync post-call</span></div>
+    </div>
+    <div class="pillar-cta">Explore Agent Suite <span class="arrow-icon">→</span></div>
+  </div>
+  <div class="pillar client" onclick="openModal(&#39;pillar-client&#39;)">
+    <div class="pillar-num">03 / CLIENT INTELLIGENCE</div>
+    <span class="pillar-icon">◎</span>
+    <div class="pillar-title">Client Intelligence</div>
+    <div class="pillar-sub">Customer Profiles · Sentiment · Revenue Prediction · Any Language</div>
+    <div class="pillar-modules">
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Dynamic Profiles</span> — Auto-updating from every conversation, 100% data captured</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Real-Time Sentiment</span> — Emotion detection, churn risk, CSAT prediction without surveys</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Next-Best-Action</span> — ML-driven optimal timing, product recs, retention scripts</span></div>
+      <div class="pmod"><div class="pmod-dot"></div><span><span class="pmod-name">Revenue Prediction</span> — Surfaces upsell targets weeks before opportunity fades</span></div>
+    </div>
+    <div class="pillar-cta">Explore Client AI <span class="arrow-icon">→</span></div>
+  </div>
+</div>
+
+<!-- PROOF -->
+<div class="sec-bar">
+  <div class="sec-tag">Proven Outcomes</div><div class="sec-line"></div>
+  <div class="sec-tag">Sales · Customer Service · Any Language · Any Market</div>
+</div>
+<div class="proof-grid">
+  <div class="proof-card g" onclick="openModal(&#39;proof-fraud&#39;)">
+    <div class="proof-val g" data-target="98" data-suffix="%">98%</div>
+    <div class="proof-label">Fraud &amp; Chargeback Reduction</div>
+    <div class="proof-desc">Chargeback rates drop from 8–12% to under 0.5% within 90 days. Internal theft incidents reach near zero.</div>
+    <div class="proof-tag g">Typical: 90 days to result</div>
+  </div>
+  <div class="proof-card a" onclick="openModal(&#39;proof-conversion&#39;)">
+    <div class="proof-val a" data-target="25" data-suffix="%">25%</div>
+    <div class="proof-label">Conversion Rate Improvement</div>
+    <div class="proof-desc">Live guidance and objection-handling scripts drive 15–25% higher conversion across all agent tiers and seniority levels.</div>
+    <div class="proof-tag a">vs. baseline performance</div>
+  </div>
+  <div class="proof-card r" onclick="openModal(&#39;proof-cost&#39;)">
+    <div class="proof-val r" data-target="90" data-suffix="%">90%</div>
+    <div class="proof-label">QA Cost Reduction</div>
+    <div class="proof-desc">Replace entire manual QA teams with AI working 24/7. Consistent, bias-free evaluation at a fraction of the cost.</div>
+    <div class="proof-tag r">avg. savings: $22K/mo</div>
+  </div>
+  <div class="proof-card c" onclick="openModal(&#39;proof-ltv&#39;)">
+    <div class="proof-val c" data-target="35" data-suffix="%">35%</div>
+    <div class="proof-label">Customer Lifetime Value Increase</div>
+    <div class="proof-desc">Better retention, expanded wallet share, lower acquisition costs through predictive churn prevention and next-best-action.</div>
+    <div class="proof-tag c">via Client Intelligence</div>
+  </div>
+</div>
+
+<!-- QA COMPARE -->
+<div class="sec-bar">
+  <div class="sec-tag">Head-to-Head</div><div class="sec-line"></div>
+  <div class="sec-tag">Manual QA vs. ASCULTA</div>
+</div>
+<div class="compare-wrap" onclick="openModal(&#39;compare&#39;)">
+  <div class="compare-side">
+    <div class="cmp-label bad">⚠ Traditional Manual QA</div>
+    <div class="cmp-row"><span class="cmp-key">Call Coverage</span><span class="cmp-val bad">2–5%</span></div>
+    <div class="cmp-row"><span class="cmp-key">Feedback Delay</span><span class="cmp-val bad">5–7 days avg</span></div>
+    <div class="cmp-row"><span class="cmp-key">Consistency</span><span class="cmp-val bad">Reviewer bias</span></div>
+    <div class="cmp-row"><span class="cmp-key">Compliance Detection</span><span class="cmp-val bad">Post-incident</span></div>
+    <div class="cmp-row"><span class="cmp-key">Cost per Reviewer</span><span class="cmp-val bad">$5K–15K/mo</span></div>
+    <div class="cmp-row"><span class="cmp-key">Fraud Prevention</span><span class="cmp-val bad">None (reactive)</span></div>
+    <div class="cmp-row"><span class="cmp-key">Customer Intelligence</span><span class="cmp-val bad">&lt;10% captured</span></div>
+    <div class="cmp-row"><span class="cmp-key">Scalability</span><span class="cmp-val bad">Linear headcount</span></div>
+  </div>
+  <div class="compare-vs">VS</div>
+  <div class="compare-side">
+    <div class="cmp-label good">✓ ASCULTA AI Platform</div>
+    <div class="cmp-row"><span class="cmp-key">Call Coverage</span><span class="cmp-val good">100% — every call</span></div>
+    <div class="cmp-row"><span class="cmp-key">Feedback Delay</span><span class="cmp-val good">Real-time, during call</span></div>
+    <div class="cmp-row"><span class="cmp-key">Consistency</span><span class="cmp-val good">Identical criteria always</span></div>
+    <div class="cmp-row"><span class="cmp-key">Compliance Detection</span><span class="cmp-val good">Instant live prevention</span></div>
+    <div class="cmp-row"><span class="cmp-key">Cost per Reviewer</span><span class="cmp-val good">Fraction of cost</span></div>
+    <div class="cmp-row"><span class="cmp-key">Fraud Prevention</span><span class="cmp-val good">Real-time blocking</span></div>
+    <div class="cmp-row"><span class="cmp-key">Customer Intelligence</span><span class="cmp-val good">100% captured &amp; activated</span></div>
+    <div class="cmp-row"><span class="cmp-key">Scalability</span><span class="cmp-val good">Infinite, zero added cost</span></div>
+  </div>
+</div>
+
+<!-- ROI -->
+<div class="sec-bar">
+  <div class="sec-tag">Financial Impact</div><div class="sec-line"></div>
+  <div class="sec-tag">ROI Analysis</div>
+</div>
+<div class="roi-wrap">
+  <div class="roi-left" onclick="openModal(&#39;roi&#39;)">
+    <div class="roi-title">Example: 50-Agent Center · 10,000 Calls/Month</div>
+    <div class="roi-calc">
+      <div class="rc cost"><div class="rc-lbl">Platform Cost</div><div class="rc-val">$3,500</div><div class="rc-sub">per month, all-inclusive</div></div>
+      <div class="rc save"><div class="rc-lbl">QA &amp; Labor Saved</div><div class="rc-val">$22,000</div><div class="rc-sub">eliminated teams</div></div>
+      <div class="rc rev"><div class="rc-lbl">Incremental Revenue</div><div class="rc-val">$45,000</div><div class="rc-sub">better conversions</div></div>
+      <div class="rc net"><div class="rc-lbl">Net Monthly Impact</div><div class="rc-val">$63,500</div><div class="rc-sub">after all fees</div></div>
+    </div>
+    <div class="roi-note"><strong>18× return</strong> from steady state. Compliance fines prevented: $50K–$500K/year. Pricing: transparent, predictable, all modules included.</div>
+  </div>
+  <div class="roi-right" onclick="openModal(&#39;savings&#39;)">
+    <div class="roi-title">Savings Breakdown</div>
+    <div class="roi-metrics">
+      <div class="rm"><div class="rm-val" style="color:var(--green)">$5K–15K</div><div class="rm-lbl">saved per manual QA reviewer eliminated/month</div></div>
+      <div class="rm"><div class="rm-val" style="color:var(--accent2)">$3K–8K</div><div class="rm-lbl">saved per data entry position reduced/month</div></div>
+      <div class="rm"><div class="rm-val" style="color:var(--gold)">$500K/yr</div><div class="rm-lbl">max compliance fine prevention annually</div></div>
+      <div class="rm"><div class="rm-val" style="color:var(--red)">–30%</div><div class="rm-lbl">agent attrition — cutting recurring hiring costs</div></div>
+      <div class="rm"><div class="rm-val" style="color:var(--cyan)">+30%</div><div class="rm-lbl">agent productivity via automation &amp; guidance</div></div>
+      <div class="rm"><div class="rm-val" style="color:var(--green)">4–6mo</div><div class="rm-lbl">payback period to full positive ROI</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TECH -->
+<div class="sec-bar">
+  <div class="sec-tag">Enterprise Security</div><div class="sec-line"></div>
+  <div class="sec-tag">Infrastructure</div>
+</div>
+<div class="tech-strip">
+  <div class="tc" onclick="openModal(&#39;security&#39;)"><div class="tc-icon">🔒</div><div class="tc-title">AES-256 + TLS 1.3</div><div class="tc-desc">Bank-grade encryption at rest &amp; in transit. Defense-in-depth architecture.</div></div>
+  <div class="tc" onclick="openModal(&#39;certifications&#39;)"><div class="tc-icon">🏛️</div><div class="tc-title">SOC 2 · ISO 27001</div><div class="tc-desc">Independently audited. GDPR &amp; Saudi PDPL compliant. Continuous monitoring.</div></div>
+  <div class="tc" onclick="openModal(&#39;isolation&#39;)"><div class="tc-icon">🌐</div><div class="tc-title">Multi-Tenant Isolation</div><div class="tc-desc">Complete logical data separation. Optional on-premise for data sovereignty.</div></div>
+  <div class="tc" onclick="openModal(&#39;access&#39;)"><div class="tc-icon">🔑</div><div class="tc-title">Role-Based Access</div><div class="tc-desc">Least-privilege principles. Comprehensive audit logging. Full reporting.</div></div>
+  <div class="tc" onclick="openModal(&#39;cloud&#39;)"><div class="tc-icon">☁️</div><div class="tc-title">AWS / Azure Hosted</div><div class="tc-desc">Enterprise cloud. Real-time bidirectional CRM sync. Webhook automation.</div></div>
+</div>
+
+<!-- INTEGRATIONS -->
+<div class="int-bar">
+  <div class="int-tag">Integrations</div>
+  <div class="int-items">
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">Salesforce</div>
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">Microsoft Dynamics</div>
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">HubSpot</div>
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">Zoho CRM</div>
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">Custom API</div>
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">Telephony Systems</div>
+    <div class="int-item" onclick="openModal(&#39;crm&#39;)">Webhook Automation</div>
+    <div class="int-item" onclick="openModal(&#39;language&#39;)">Arabic · 3 Dialects</div>
+    <div class="int-item" onclick="openModal(&#39;language&#39;)">English · Adaptive</div>
+    <div class="int-item" onclick="openModal(&#39;language&#39;)">Any Language · Any Market</div>
+  </div>
+  <div class="cert-strip">
+    <div class="cert">SOC 2 II</div><div class="cert">ISO 27001</div>
+    <div class="cert">GDPR</div><div class="cert">PDPL</div><div class="cert">SAMA</div>
+  </div>
+</div>
+
+<!-- FOOTER CTA -->
+<div class="footer-section">
+  <div>
+    <div class="footer-cta">The World's Most Valued AI Platform<br>for Sales &amp; Customer Service Call Centers.</div>
+    <div class="footer-sub">In any language. In any market. ASCULTA AI is the only platform that delivers 100% call coverage, real-time regulatory protection, AI-powered sales guidance, and predictive customer intelligence — all in one. Trusted by banks, financial institutions, and regulated enterprises across the GCC and globally. Implementation in 48 hours. ROI in 4–6 months.</div>
+  </div>
+  <div class="footer-right">
+    <div class="footer-logo-wrap">
+      <div class="footer-logo">ASCULTA</div>
+      <span class="ai-bubble">AI</span>
+    </div>
+    <div class="footer-meta">The Most Valued AI for Sales &amp; Customer Service<br>Any Language · Any Market · GCC &amp; Global<br>SAMA · CITC · SFDA Compliant</div>
+    <a href="https://calendly.com/tradingtipper/30min" target="_blank" class="demo-btn">
+      <div class="demo-btn-dot"></div>Schedule a Demo
+    </a>
+    <div class="roi-badge">ROI Positive · 4–6 Months</div>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<!-- ═══════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+<div class="modal" id="modal-box">
+  <div class="modal-header">
+    <div class="modal-title" id="modal-title">Details</div>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+  </div>
+  <div class="modal-body" id="modal-body"></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PRESENTATION MODE
+═══════════════════════════════════════════ -->
+<div class="present-overlay" id="present-overlay">
+  <button class="close-present" onclick="endPresentation()">✕ Exit</button>
+  <div class="present-slide" id="present-slide">
+    <div class="slide-bg-num" id="slide-bg-num"></div>
+    <div id="slide-content"></div>
+  </div>
+  <div class="present-nav">
+    <button class="nav-btn" onclick="prevSlide()">← Previous</button>
+    <div class="present-progress"><div class="present-progress-fill" id="progress-fill"></div></div>
+    <div class="slide-counter" id="slide-counter">1 / 8</div>
+    <button class="nav-btn primary" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<script>
+/* ════════════════════════════════════════════════
+   CANVAS AI BACKGROUND
+════════════════════════════════════════════════ */
+let raf;
+function initCanvas() {
+  if (raf) cancelAnimationFrame(raf);
+  const c = document.getElementById('bg-canvas');
+  const ctx = c.getContext('2d');
+  const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight; };
+  resize();
+  window.addEventListener('resize', resize);
+  const N = 45;
+  const nodes = Array.from({length:N}, () => ({
+    x: Math.random()*c.width, y: Math.random()*c.height,
+    vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35,
+    r:1+Math.random()*2, p:Math.random()*Math.PI*2
+  }));
+  const dark = () => document.documentElement.getAttribute('data-theme')==='dark';
+  function draw(t) {
+    ctx.clearRect(0,0,c.width,c.height);
+    const d = dark();
+    // grid
+    ctx.strokeStyle = d ? 'rgba(99,120,255,0.035)' : 'rgba(43,70,232,0.025)';
+    ctx.lineWidth=1;
+    for(let x=0;x<c.width;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,c.height);ctx.stroke()}
+    for(let y=0;y<c.height;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke()}
+    // update
+    nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;n.p+=.018;
+      if(n.x<0||n.x>c.width)n.vx*=-1;if(n.y<0||n.y>c.height)n.vy*=-1});
+    // connections
+    for(let i=0;i<N;i++) for(let j=i+1;j<N;j++){
+      const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<165){
+        const op=d?(1-dist/165)*.2:(1-dist/165)*.09;
+        const g=ctx.createLinearGradient(nodes[i].x,nodes[i].y,nodes[j].x,nodes[j].y);
+        g.addColorStop(0, d?`rgba(99,120,255,${op})`:`rgba(43,70,232,${op})`);
+        g.addColorStop(1, d?`rgba(0,212,255,${op})`:`rgba(0,111,168,${op})`);
+        ctx.beginPath();ctx.strokeStyle=g;ctx.lineWidth=.7;
+        ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();
+      }
+    }
+    // nodes
+    nodes.forEach(n=>{
+      const op=d?(0.28+Math.sin(n.p)*.15):(0.14+Math.sin(n.p)*.07);
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r+Math.sin(n.p)*.5,0,Math.PI*2);
+      ctx.fillStyle=d?`rgba(99,120,255,${op})`:`rgba(43,70,232,${op})`;ctx.fill();
+    });
+    raf = requestAnimationFrame(draw);
+  }
+  raf = requestAnimationFrame(draw);
+}
+
+/* ════════════════════════════════════════════════
+   COUNTER ANIMATION
+════════════════════════════════════════════════ */
+function animCounters() {
+  document.querySelectorAll('[data-target]').forEach(el => {
+    const tgt = parseFloat(el.dataset.target);
+    const pre = el.dataset.prefix||'', suf = el.dataset.suffix||'';
+    const dur = 1800, start = performance.now();
+    const go = now => {
+      const p = Math.min((now-start)/dur,1);
+      const e = 1-Math.pow(1-p,3);
+      el.textContent = pre+Math.round(tgt*e)+suf;
+      if(p<1) requestAnimationFrame(go);
+      else el.textContent = pre+tgt+suf;
+    };
+    setTimeout(()=>requestAnimationFrame(go), 200+Math.random()*600);
+  });
+}
+
+/* ════════════════════════════════════════════════
+   THEME
+════════════════════════════════════════════════ */
+function toggleTheme() {
+  const html = document.documentElement;
+  const l = html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme', l?'light':'dark');
+  document.getElementById('theme-lbl').textContent = l?'Light':'Dark';
+  initCanvas();
+}
+
+/* ════════════════════════════════════════════════
+   MODAL DATA
+════════════════════════════════════════════════ */
+const MODALS = {
+  coverage: {
+    title: '100% Call Coverage — What It Means',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">100%</div><div class="modal-stat-lbl">Calls Monitored</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--red)">2–5%</div><div class="modal-stat-lbl">Manual QA Coverage</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">0</div><div class="modal-stat-lbl">Blind Spots</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Why 100% Coverage Changes Everything</div>
+        <ul class="modal-list">
+          <li>Every compliance violation is caught in real-time — not discovered weeks later in a penalty notice</li>
+          <li>Every fraud attempt is flagged instantly — not after funds have moved</li>
+          <li>Every churn signal is captured — not missed because a QA reviewer sampled a different 3% of calls</li>
+          <li>Every coaching opportunity is surfaced — not dependent on whether a manager happened to review that call</li>
+          <li>Every customer intelligence signal is activated — product interests, budget constraints, buying intent</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">The Math of 95% Blindness</div>
+        <ul class="modal-list">
+          <li>A 50-agent center running 10,000 calls/month: manual QA sees 200–500 calls. ASCULTA AI sees all 10,000.</li>
+          <li>At $50K–$500K/year in potential compliance fines, missing 95% of calls is an existential risk</li>
+          <li>At 8–12% chargeback rates, the unmonitored 95% is where most disputes originate</li>
+        </ul>
+      </div>
+      <div class="modal-chip-row">
+        <span class="modal-chip g">Zero Blind Spots</span>
+        <span class="modal-chip a">Real-Time Analysis</span>
+        <span class="modal-chip g">Every Sentence Scored</span>
+        <span class="modal-chip r">Instant Alerts</span>
+      </div>`
+  },
+  cost: {
+    title: '90% Cost Reduction — The Economics',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--red)">90%</div><div class="modal-stat-lbl">QA Cost Reduction</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">$22K+</div><div class="modal-stat-lbl">Monthly Savings</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">18×</div><div class="modal-stat-lbl">ROI Multiplier</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Where the Savings Come From</div>
+        <ul class="modal-list">
+          <li><strong>Manual QA Reviewers:</strong> $5,000–$15,000 per reviewer per month, eliminated completely</li>
+          <li><strong>Data Entry Staff:</strong> $3,000–$8,000 per position reduced per month</li>
+          <li><strong>Compliance Fines Prevented:</strong> $50,000–$500,000 per year in avoided regulatory penalties</li>
+          <li><strong>Chargeback Revenue Saved:</strong> 98% reduction from 8–12% to under 0.5% rates</li>
+          <li><strong>Agent Attrition:</strong> 30% reduction — cutting $10K–$30K in recurring hiring & training costs per agent</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Platform Costs (Transparent)</div>
+        <ul class="modal-list">
+          <li>Cloud hosting (AWS/Azure): $500–$2,000/month based on volume</li>
+          <li>Database storage & backup: $200–$800/month</li>
+          <li>All modules included — no per-feature fees, no hidden charges</li>
+          <li>Volume discounts available for enterprise deployments</li>
+        </ul>
+      </div>`
+  },
+  chargeback: {
+    title: '98% Chargeback Reduction — How It Works',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">8–12%</div><div class="modal-stat-lbl">Avg. Before ASCULTA</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">&lt;0.5%</div><div class="modal-stat-lbl">After 90 Days</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">98%</div><div class="modal-stat-lbl">Reduction</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Real-Time Chargeback Prevention Mechanisms</div>
+        <ul class="modal-list">
+          <li>Sentiment monitoring detects customer frustration and confusion in real-time — flags high-risk conversations before they end in disputes</li>
+          <li>Compliance keyword monitoring catches prohibited phrases and misleading claims the moment they're spoken</li>
+          <li>Predictive chargeback alerts flag conversations statistically likely to result in disputes based on historical patterns</li>
+          <li>Bank recall prevention — monitors and blocks conversation patterns that historically lead to institutional fund recovery actions</li>
+          <li>Historical behavior recognition identifies at-risk agents and conversation types before issues occur</li>
+        </ul>
+      </div>`
+  },
+  setup: {
+    title: '48-Hour Implementation — Zero Disruption',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--cyan)">48h</div><div class="modal-stat-lbl">Full Go-Live</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">0</div><div class="modal-stat-lbl">Workflow Changes</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">5</div><div class="modal-stat-lbl">CRM Integrations</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Implementation Steps</div>
+        <ul class="modal-list">
+          <li><strong>Hour 1–4:</strong> Connect to your CRM via secure API — Salesforce, Dynamics, HubSpot, Zoho, or custom</li>
+          <li><strong>Hour 4–12:</strong> Configure data sync preferences and map your existing quality standards</li>
+          <li><strong>Hour 12–24:</strong> Map regulatory requirements (SAMA, CITC, SFDA) to monitoring rules</li>
+          <li><strong>Hour 24–48:</strong> Agent onboarding, supervisor training, and live monitoring begins</li>
+          <li>No replacement of existing systems — ASCULTA AI enhances what you have</li>
+          <li>Two paths: self-service configuration dashboard, or full managed setup by our account managers</li>
+        </ul>
+      </div>`
+  },
+  market: {
+    title: 'Market Opportunity — The $500B+ Landscape',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">$500B+</div><div class="modal-stat-lbl">Current Market</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">$741B</div><div class="modal-stat-lbl">By 2030</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">GCC</div><div class="modal-stat-lbl">Primary Focus</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Target Segments</div>
+        <ul class="modal-list">
+          <li><strong>Banking & Financial Services:</strong> Highest compliance burden, largest fraud exposure, strongest ASCULTA fit</li>
+          <li><strong>Insurance:</strong> Claims processing, policy sales — high chargeback and mis-selling risk</li>
+          <li><strong>Fintech & Crypto:</strong> Anti-fraud critical, rapidly growing, underserved by traditional QA</li>
+          <li><strong>Healthcare:</strong> HIPAA-equivalent compliance, patient satisfaction, agent performance</li>
+          <li><strong>Telecom:</strong> High call volumes, regulatory pressure, retention challenges</li>
+          <li><strong>GCC Expansion:</strong> Saudi Arabia, UAE, Qatar, Kuwait, Bahrain — all under SAMA/CITC/SFDA with acute need</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">How ASCULTA Enters Your Organization</div>
+        <ul class="modal-list">
+          <li><strong>Start:</strong> Deploy Risk Management immediately — compliance coverage goes from 2–5% to 100% on day one</li>
+          <li><strong>Expand:</strong> Add Agent Optimization and Client Intelligence as value compounds across teams</li>
+          <li><strong>Scale:</strong> Platform grows with your call volume at no additional cost — infinite scalability built in</li>
+          <li><strong>Integrate:</strong> Native partnerships with Salesforce, Microsoft, and leading regional system integrators</li>
+        </ul>
+      </div>`
+  },
+  'pillar-risk': {
+    title: '🛡️ Risk Management — Complete Protection Suite',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--red)">0%</div><div class="modal-stat-lbl">Regulatory Violations</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">98%</div><div class="modal-stat-lbl">Fraud Reduction</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">&lt;1s</div><div class="modal-stat-lbl">Alert Response</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Live Compliance Monitoring</div>
+        <ul class="modal-list">
+          <li>AI analyzes every sentence of every call in real-time against SAMA, CITC, SFDA, and international regulations</li>
+          <li>Script adherence monitoring — instant deviation alerts the moment an agent goes off-script</li>
+          <li>Automatic flagging of prohibited language, unsubstantiated claims, and regulatory violations</li>
+          <li>Complete audit trail — every call documented and searchable for regulatory review</li>
+          <li>Unlike periodic audits: instant detection and prevention, not post-incident remediation</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Anti-Fraud: Total Theft Prevention</div>
+        <ul class="modal-list">
+          <li>Monitors conversations involving fund transfers, credentials, and crypto wallet addresses</li>
+          <li>Blocks unauthorized transfers to unapproved accounts or wallets in real-time</li>
+          <li>Detects subtle fraud indicators: unusual conversation patterns, bypass attempts, social engineering</li>
+          <li>Instant security team alerts with conversation context, transaction pauses, or automated call termination</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Live Threat Detector</div>
+        <ul class="modal-list">
+          <li>ML model trained on millions of call center conversations across regulated industries</li>
+          <li>Dynamically scores every active call across compliance, fraud, and security risk dimensions simultaneously</li>
+          <li>Analyzes call velocity, keyword patterns, sentiment trajectory, and behavioral signals</li>
+          <li>Auto-triggers intervention: supervisor coaching alerts, call recording escalation, or termination</li>
+        </ul>
+      </div>
+      <div class="modal-chip-row">
+        <span class="modal-chip r">SAMA Compliant</span><span class="modal-chip r">CITC Compliant</span>
+        <span class="modal-chip r">SFDA Compliant</span><span class="modal-chip g">Real-Time Block</span>
+        <span class="modal-chip a">Complete Audit Trail</span><span class="modal-chip go">Zero Penalties</span>
+      </div>`
+  },
+  'pillar-agent': {
+    title: '⚡ Agent Optimization — Full Performance Suite',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">+25%</div><div class="modal-stat-lbl">Conversion Uplift</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">–60%</div><div class="modal-stat-lbl">Training Cost</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">–30%</div><div class="modal-stat-lbl">Agent Attrition</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Live Agent Guidance — Real-Time Copilot</div>
+        <ul class="modal-list">
+          <li>On-screen prompts appear during calls: objection-handling scripts, upsell opportunities, compliance reminders</li>
+          <li>Identifies buying signals and hesitation patterns in customer speech — suggests optimal response instantly</li>
+          <li>Proven rebuttal frameworks for every objection type, drawn from your top performers' successful calls</li>
+          <li>Product knowledge prompts deliver pricing, features, and key talking points exactly when needed</li>
+          <li>Effect: junior agents perform at senior level from day one</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Personalized Training & Daily Motivation</div>
+        <ul class="modal-list">
+          <li>AI analyzes every agent's call history to identify specific, individual skill gaps — not generic training</li>
+          <li>Generates custom modules with examples from that agent's own calls plus top-performer benchmarks</li>
+          <li>Daily AI-crafted motivational messages based on each agent's performance trend and personality</li>
+          <li>Gamification, peer benchmarking, micro-achievement recognition, goal progress visualization</li>
+          <li>Result: 25–40% higher engagement, reduced absenteeism, significantly lower turnover</li>
+        </ul>
+      </div>
+      <div class="modal-chip-row">
+        <span class="modal-chip g">+15–25% Conversions</span><span class="modal-chip a">–40% Training Time</span>
+        <span class="modal-chip g">–30% Attrition</span><span class="modal-chip a">Zero Manual Entry</span>
+      </div>`
+  },
+  'pillar-client': {
+    title: '◎ Client Intelligence — Predictive Revenue Engine',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">100%</div><div class="modal-stat-lbl">Data Captured</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--cyan)">+35%</div><div class="modal-stat-lbl">LTV Increase</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">Weeks</div><div class="modal-stat-lbl">Early Churn Warning</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Dynamic Client Profiles</div>
+        <ul class="modal-list">
+          <li>Auto-updates after every conversation — product interests, budget signals, objections, competitor mentions</li>
+          <li>Identifies communication preferences: email vs. calls, data-driven vs. relationship-focused engagement</li>
+          <li>Agents see complete relationship history instantly — no repetition, no conflicting information</li>
+          <li>Managers see portfolio-level insights for targeted campaigns and proactive retention</li>
+          <li>Captures 100% of call intelligence vs. under 10% with manual notes</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Next-Best-Action Engine</div>
+        <ul class="modal-list">
+          <li>ML analyzes customer history, behavior, sentiment, and products to recommend the optimal next step</li>
+          <li>Specific, actionable: "Call Thursday 10AM with revised pricing proposal — 78% conversion probability"</li>
+          <li>Optimal contact timing based on individual customer responsiveness patterns</li>
+          <li>Identifies customers at churn risk weeks before cancellation signals become obvious</li>
+          <li>Result: 20–35% shorter sales cycles, 15–25% higher conversion rates</li>
+        </ul>
+      </div>
+      <div class="modal-chip-row">
+        <span class="modal-chip g">+20–35% LTV</span><span class="modal-chip c">Churn Prevention</span>
+        <span class="modal-chip a">CSAT Without Surveys</span><span class="modal-chip g">100% Intelligence</span>
+      </div>`
+  },
+  roi: {
+    title: 'Financial Impact — Full ROI Analysis',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">$63,500</div><div class="modal-stat-lbl">Net Monthly Impact</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">18×</div><div class="modal-stat-lbl">Return on Investment</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">4–6mo</div><div class="modal-stat-lbl">Payback Period</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">50-Agent Example (10,000 calls/month)</div>
+        <ul class="modal-list">
+          <li><strong>Platform Cost:</strong> $3,500/month — all modules, unlimited usage, no hidden fees</li>
+          <li><strong>QA & Labor Saved:</strong> $22,000/month — eliminated manual QA and data entry positions</li>
+          <li><strong>Incremental Revenue:</strong> $45,000/month — from better conversions, reduced chargebacks, higher retention</li>
+          <li><strong>Net Impact:</strong> $63,500/month positive after all costs — $762,000/year</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Enterprise Scale Projections</div>
+        <ul class="modal-list">
+          <li>200-agent center: $250K+/month net impact, $3M+/year</li>
+          <li>Compliance fine prevention adds $50K–$500K/year on top</li>
+          <li>Chargeback elimination typically saves $2–5M/year for larger financial institutions</li>
+          <li>Customers achieving 20–30% better goal attainment through predictive analytics</li>
+        </ul>
+      </div>`
+  },
+  compare: {
+    title: 'Head-to-Head: Manual QA vs. ASCULTA AI',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--red)">3%</div><div class="modal-stat-lbl">Manual Coverage</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">100%</div><div class="modal-stat-lbl">ASCULTA Coverage</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">0s</div><div class="modal-stat-lbl">Feedback Delay</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">The Fundamental Difference</div>
+        <ul class="modal-list">
+          <li>Manual QA is <strong>retrospective</strong> — it finds problems after damage is done. ASCULTA AI is <strong>preventive</strong> — it stops problems during the call</li>
+          <li>Manual QA is <strong>sampling</strong> — you never know what you're missing in the other 97%. ASCULTA AI is <strong>comprehensive</strong> — there is no sample</li>
+          <li>Manual QA is <strong>subjective</strong> — every reviewer grades differently. ASCULTA AI is <strong>objective</strong> — identical criteria, every time</li>
+          <li>Manual QA is <strong>expensive to scale</strong> — more calls means more headcount. ASCULTA AI is <strong>infinitely scalable</strong> — same cost regardless of volume</li>
+          <li>Manual QA has <strong>7-day feedback loops</strong>. ASCULTA AI gives agents feedback <strong>in real-time during the call</strong></li>
+        </ul>
+      </div>`
+  },
+  crm: {
+    title: 'CRM Integration & Technical Architecture',
+    body: `
+      <div class="modal-section">
+        <div class="modal-section-title">Supported Integrations</div>
+        <ul class="modal-list">
+          <li><strong>Salesforce:</strong> Native connector, bidirectional sync, custom field mapping, opportunity updates</li>
+          <li><strong>Microsoft Dynamics:</strong> Full CRM enrichment, activity logging, AI-powered next steps</li>
+          <li><strong>HubSpot:</strong> Contact enrichment, deal stage automation, sentiment-driven workflows</li>
+          <li><strong>Zoho CRM:</strong> Lead scoring, conversation summaries, disposition sync</li>
+          <li><strong>Custom CRM:</strong> Flexible REST API, webhook support, real-time event streaming</li>
+          <li><strong>Telephony:</strong> Compatible with major call center platforms and telephony systems</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Data Flow</div>
+        <ul class="modal-list">
+          <li>ASCULTA AI pulls context from your CRM before each call — agent sees full customer history</li>
+          <li>During the call: real-time analysis, scoring, and guidance — no CRM impact</li>
+          <li>Post-call: AI pushes enriched data back — summaries, sentiment scores, compliance status, next-step recommendations, updated profiles</li>
+          <li>Webhook support enables real-time automation: follow-up tasks, deal stage updates, escalation tickets</li>
+        </ul>
+      </div>`
+  },
+  language: {
+    title: '🌍 Any Language · Any Market — True Multilingual Intelligence',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--cyan)">95%+</div><div class="modal-stat-lbl">Transcription Accuracy</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">Any</div><div class="modal-stat-lbl">Language Supported</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">#1</div><div class="modal-stat-lbl">Multilingual Sales AI</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Why Language Is Everything in Sales & Customer Service</div>
+        <ul class="modal-list">
+          <li>A sales objection phrased in Gulf Arabic carries different nuance than the same words in Egyptian Arabic — ASCULTA AI understands both</li>
+          <li>Customer sentiment is language-specific — a frustrated Levantine speaker signals churn differently than an English speaker. ASCULTA catches all of it</li>
+          <li>Compliance phrases, prohibited terms, and regulatory scripts differ by market and language — ASCULTA AI enforces all of them simultaneously</li>
+          <li>Most competitors support one language with basic keyword spotting. ASCULTA AI delivers full conversational intelligence across every language it monitors</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Arabic Dialect Mastery — Built for GCC</div>
+        <ul class="modal-list">
+          <li><strong>Gulf Arabic (Khaleeji):</strong> Saudi, UAE, Kuwaiti, Qatari, Bahraini — dialect-specific vocabulary, idioms, and sales terminology</li>
+          <li><strong>Egyptian Arabic:</strong> The most widely understood dialect — full comprehension including colloquialisms and code-switching</li>
+          <li><strong>Levantine Arabic:</strong> Lebanese, Syrian, Jordanian, Palestinian — full regional variant support</li>
+          <li><strong>Seamless Code-Switching:</strong> When agents mix Arabic and English mid-sentence — the everyday reality in GCC call centers — ASCULTA follows without missing a word</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Global Language Expansion</div>
+        <ul class="modal-list">
+          <li>English (US, UK, Australian, Indian accents) — fully supported with accent-specific models</li>
+          <li>Additional languages available on enterprise deployment — speak to your account manager</li>
+          <li>Supervisor translation: managers monitor any call in any language in real-time, in their own language</li>
+          <li>QA teams evaluate calls in their preferred language regardless of the original call language</li>
+        </ul>
+      </div>
+      <div class="modal-chip-row">
+        <span class="modal-chip c">Any Language</span>
+        <span class="modal-chip g">Gulf Arabic</span>
+        <span class="modal-chip g">Egyptian Arabic</span>
+        <span class="modal-chip g">Levantine Arabic</span>
+        <span class="modal-chip a">English (All Accents)</span>
+        <span class="modal-chip a">Code-Switching</span>
+        <span class="modal-chip go">95%+ Accuracy</span>
+      </div>`
+  },
+  security: {
+    title: 'Enterprise Security Architecture',
+    body: `
+      <div class="modal-section">
+        <div class="modal-section-title">Encryption Standards</div>
+        <ul class="modal-list">
+          <li><strong>AES-256 at rest:</strong> Bank-grade encryption for all stored conversation and customer data</li>
+          <li><strong>TLS 1.3 in transit:</strong> Latest protocol prevents any network interception or data tampering</li>
+          <li><strong>Key management:</strong> Customer-managed encryption key option for highest security requirements</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Architecture & Compliance</div>
+        <ul class="modal-list">
+          <li>Multi-tenant architecture with complete logical isolation — your data never touches other customers' environments</li>
+          <li>SOC 2 Type II certified — independently audited for security, availability, and confidentiality</li>
+          <li>ISO 27001 certified — internationally recognized information security management standard</li>
+          <li>GDPR compliant — European data protection adherence</li>
+          <li>Saudi PDPL compliant — full adherence to Saudi Arabia's Personal Data Protection Law</li>
+          <li>Optional on-premise deployment for organizations requiring data sovereignty</li>
+          <li>Role-based access control with least-privilege principles and comprehensive audit logging</li>
+        </ul>
+      </div>`
+  },
+  gtm: {
+    title: '🌍 Enterprise Deployments — GCC, MENA & Global',
+    body: `
+      <div class="modal-stat-row">
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--gold)">Enterprise</div><div class="modal-stat-lbl">Deployment Grade</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--green)">GCC</div><div class="modal-stat-lbl">Primary Region</div></div>
+        <div class="modal-stat"><div class="modal-stat-val" style="color:var(--accent2)">48h</div><div class="modal-stat-lbl">Full Go-Live</div></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">Industries We Serve</div>
+        <ul class="modal-list">
+          <li><strong>Banking & Financial Services:</strong> Highest compliance burden, largest fraud exposure — ASCULTA's strongest fit and deepest results</li>
+          <li><strong>Insurance:</strong> Claims processing, policy sales — high chargeback and mis-selling risk fully covered</li>
+          <li><strong>Fintech & Crypto:</strong> Anti-fraud critical, rapidly evolving regulatory landscape, underserved by legacy QA tools</li>
+          <li><strong>Healthcare:</strong> HIPAA-equivalent compliance, patient satisfaction, agent performance monitoring</li>
+          <li><strong>Telecom:</strong> High call volumes, retention challenges, regulatory pressure — all solved in one platform</li>
+          <li><strong>GCC Coverage:</strong> Saudi Arabia, UAE, Qatar, Kuwait, Bahrain — fully compliant with SAMA, CITC, and SFDA</li>
+        </ul>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">How ASCULTA Grows Inside Your Organization</div>
+        <ul class="modal-list">
+          <li><strong>Start:</strong> Deploy Risk Management — immediate compliance coverage and fraud prevention from day one</li>
+          <li><strong>Expand:</strong> Add Agent Optimization and Client Intelligence as value compounds across departments</li>
+          <li><strong>Scale:</strong> Platform grows with your call volume — no additional headcount, same subscription</li>
+          <li><strong>Integrate:</strong> Deep CRM partnerships with Salesforce, Microsoft Dynamics, and regional system integrators</li>
+        </ul>
+      </div>
+      <div class="modal-chip-row">
+        <span class="modal-chip go">Enterprise Grade</span>
+        <span class="modal-chip g">GCC Compliant</span>
+        <span class="modal-chip a">SAMA · CITC · SFDA</span>
+        <span class="modal-chip c">48h Deployment</span>
+      </div>`
+  }
+};
+
+function openModal(id) {
+  const data = MODALS[id];
+  if(!data) return;
+  document.getElementById('modal-title').textContent = data.title;
+  document.getElementById('modal-body').innerHTML = data.body;
+  document.getElementById('modal-overlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if(e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') { closeModal(); endPresentation(); } });
+
+/* ════════════════════════════════════════════════
+   PRESENTATION MODE
+════════════════════════════════════════════════ */
+const SLIDES = [
+  {
+    label:'The Problem',
+    title:'Your Call Center Is Operating Blind<br><span style="color:var(--red)">95% of the Time.</span>',
+    subtitle:'Sales and customer service call centers worldwide are operating blind — manual QA samples just 2–5% of calls. Violations, fraud, and lost revenue signals go undetected for weeks.',
+    stats:[
+      {val:'2–5%', lbl:'Calls Monitored', color:'var(--red)'},
+      {val:'7–30d', lbl:'Detection Lag', color:'var(--red)'},
+      {val:'$500K', lbl:'Avg Annual Fines', color:'var(--gold)'},
+      {val:'<10%', lbl:'Intelligence Captured', color:'var(--red)'}
+    ]
+  },
+  {
+    label:'The Solution',
+    title:'The World\'s Most Valued AI<br>for <span style="color:var(--accent2)">Sales & Customer Service.</span>',
+    subtitle:'ASCULTA AI monitors every call, every sentence, in real-time — in any language, any market. Compliance, fraud prevention, live sales guidance, and predictive customer intelligence. One platform. Infinite scale.',
+    stats:[
+      {val:'100%', lbl:'Call Coverage', color:'var(--green)'},
+      {val:'Any', lbl:'Language & Market', color:'var(--cyan)'},
+      {val:'48h', lbl:'Go-Live', color:'var(--accent2)'},
+      {val:'18×', lbl:'ROI Multiplier', color:'var(--gold)'}
+    ]
+  },
+  {
+    label:'Platform Architecture',
+    title:'Three Intelligence<br><span style="color:var(--accent2)">Pillars. One Platform.</span>',
+    subtitle:'Built for sales teams and customer service operations — in Arabic, English, or any language. Three full suites, one unified platform, zero blind spots.',
+    points:[
+      {title:'🛡️ Risk Management', desc:'Real-time compliance vs SAMA/CITC/SFDA, fraud detection, chargeback prevention — in any language your agents speak.'},
+      {title:'⚡ Sales & Agent Optimization', desc:'Live on-screen guidance, objection scripts, upsell signals, personalized AI training. +25% conversions across every language and market.'},
+      {title:'◎ Client Intelligence', desc:'Dynamic profiles, sentiment analysis in any language, next-best-action engine. +35% customer lifetime value.'},
+      {title:'🌍 Any Language · Any Market', desc:'95%+ accuracy across Arabic dialects, English, and expanding languages. The only platform built for true multilingual sales excellence.'}
+    ]
+  },
+  {
+    label:'Proven Outcomes',
+    title:'Results That<br><span style="color:var(--green)">Speak for Themselves.</span>',
+    subtitle:'Across sales centers and customer service operations — in Arabic, English, and beyond. These are real results, delivered within the first 90 days.',
+    stats:[
+      {val:'98%', lbl:'Chargeback Reduction', color:'var(--green)'},
+      {val:'25%', lbl:'Conversion Uplift', color:'var(--accent2)'},
+      {val:'90%', lbl:'QA Cost Reduction', color:'var(--red)'},
+      {val:'35%', lbl:'Lifetime Value Gain', color:'var(--cyan)'}
+    ]
+  },
+  {
+    label:'Financial Impact',
+    title:'<span style="color:var(--gold)">$63,500</span> Net Monthly Impact<br>for a 50-Agent Center.',
+    subtitle:'Platform costs $3,500/month. Saves $22,000 in QA labor. Generates $45,000 in incremental revenue. Payback in 4–6 months.',
+    stats:[
+      {val:'18×', lbl:'ROI Multiplier', color:'var(--gold)'},
+      {val:'$762K', lbl:'Annual Net Impact', color:'var(--green)'},
+      {val:'4–6mo', lbl:'Payback Period', color:'var(--accent2)'},
+      {val:'$500K', lbl:'Compliance Fines Saved', color:'var(--cyan)'}
+    ]
+  },
+  {
+    label:'Security & Compliance',
+    title:'Enterprise-Grade Security.<br><span style="color:var(--green)">Zero Compromise.</span>',
+    subtitle:'Bank-level encryption, multi-tenant isolation, SOC 2 Type II certified, ISO 27001, GDPR, and Saudi PDPL compliant. Independently audited.',
+    points:[
+      {title:'🔒 AES-256 + TLS 1.3', desc:'Bank-grade encryption at rest and in transit. Same standard used by global financial institutions.'},
+      {title:'🏛️ Certified & Audited', desc:'SOC 2 Type II, ISO 27001, GDPR, PDPL — independently verified, not self-declared.'},
+      {title:'🌐 Data Sovereignty', desc:'Multi-tenant isolation. Optional on-premise deployment. Your data never leaves your jurisdiction.'},
+      {title:'⚙️ 48-Hour Go-Live', desc:'Connect to your CRM, map your standards, start monitoring. Non-disruptive implementation.'}
+    ]
+  },
+  {
+    label:'Market Position',
+    title:'<span style="color:var(--accent2)">The Most Valued.</span><br>Any Language. Any Market.',
+    subtitle:'Sales and customer service call centers across every industry and every language need one thing: total visibility. ASCULTA AI is the only platform that delivers it.',
+    stats:[
+      {val:'$500B+', lbl:'Global Market', color:'var(--accent2)'},
+      {val:'Any', lbl:'Language Supported', color:'var(--cyan)'},
+      {val:'100%', lbl:'Call Intelligence', color:'var(--green)'},
+      {val:'#1', lbl:'Sales & CS Platform', color:'var(--gold)'}
+    ]
+  },
+  {
+    label:'The Decision',
+    title:'The Most Valued AI for Sales<br>& Customer Service. <span style="color:var(--accent2)">In Any Language.</span>',
+    subtitle:'Your competitors are moving to 100% AI call intelligence. Your sales team is leaving revenue on the table. Your customers are signaling churn in languages your current system can\'t even read.',
+    points:[
+      {title:'🌍 Any Language · Any Market', desc:'Arabic, English, and beyond. 95%+ accuracy across dialects. The only platform built for true multilingual sales and service excellence.'},
+      {title:'⚡ Sales Results from Day One', desc:'+25% conversion uplift. Live guidance, objection scripts, upsell signals — in real-time, in every language your agents speak.'},
+      {title:'🛡️ Zero Risk from Go-Live', desc:'100% call coverage replaces 2–5% manual QA instantly. Compliance, fraud, and chargebacks — all eliminated in 48 hours.'},
+      {title:'📅 Schedule Your Demo Today', desc:'30-minute personalized walkthrough. See ASCULTA AI working with your language, your use case, your ROI numbers.'}
+    ]
+  }
+];
+
+let slideIdx = 0;
+
+function buildSlide(idx) {
+  const s = SLIDES[idx];
+  let html = `<div class="slide-label">${s.label}</div>
+    <div class="slide-title">${s.title}</div>
+    <div class="slide-subtitle">${s.subtitle}</div>`;
+  if(s.stats) {
+    html += `<div class="slide-stats">`;
+    s.stats.forEach(st => {
+      html += `<div class="slide-stat">
+        <div class="slide-stat-val" style="color:${st.color}">${st.val}</div>
+        <div class="slide-stat-lbl">${st.lbl}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    if(idx === SLIDES.length-1) {
+      html += `<br><a href="https://calendly.com/tradingtipper/30min" target="_blank" class="demo-btn" style="margin-top:16px;display:inline-flex">
+        <div class="demo-btn-dot"></div>Schedule Your Demo Now
+      </a>`;
+    }
+  }
+  if(s.points) {
+    html += `<div class="slide-points">`;
+    s.points.forEach(p => {
+      html += `<div class="slide-point">
+        <div class="slide-point-title">${p.title}</div>
+        <div class="slide-point-desc">${p.desc}</div>
+      </div>`;
+    });
+    html += `</div>`;
+    if(idx === SLIDES.length-1) {
+      html += `<br><a href="https://calendly.com/tradingtipper/30min" target="_blank" class="demo-btn" style="margin-top:24px;display:inline-flex">
+        <div class="demo-btn-dot"></div>Schedule Your Demo Now
+      </a>`;
+    }
+  }
+  return html;
+}
+
+function startPresentation() {
+  slideIdx = 0;
+  document.getElementById('present-overlay').classList.add('active');
+  document.body.classList.add('presenting');
+  renderSlide();
+}
+function endPresentation() {
+  document.getElementById('present-overlay').classList.remove('active');
+  document.body.classList.remove('presenting');
+}
+function renderSlide() {
+  const el = document.getElementById('slide-content');
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(12px)';
+  setTimeout(() => {
+    el.innerHTML = buildSlide(slideIdx);
+    document.getElementById('slide-bg-num').textContent = slideIdx+1;
+    document.getElementById('slide-counter').textContent = `${slideIdx+1} / ${SLIDES.length}`;
+    const pct = ((slideIdx+1)/SLIDES.length)*100;
+    document.getElementById('progress-fill').style.width = pct+'%';
+    el.style.transition = 'opacity .4s ease, transform .4s ease';
+    el.style.opacity = '1';
+    el.style.transform = 'translateY(0)';
+  }, 120);
+}
+function nextSlide() {
+  if(slideIdx < SLIDES.length-1) { slideIdx++; renderSlide(); }
+  else { window.open('https://calendly.com/tradingtipper/30min','_blank'); }
+}
+function prevSlide() {
+  if(slideIdx > 0) { slideIdx--; renderSlide(); }
+}
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('present-overlay').classList.contains('active')) return;
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ') nextSlide();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') prevSlide();
+});
+
+/* ════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  animCounters();
+  initCanvas();
+});
+</script>
+
+
+</body></html>
